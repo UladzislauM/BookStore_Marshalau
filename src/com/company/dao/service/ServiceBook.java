@@ -43,10 +43,24 @@ public class ServiceBook {
         System.out.println(book);
     }
 
-    public Book getBookByISBN(Integer isbn) {
+    public void getBookByISBN(Integer isbn) {
         System.out.println("Start method Service.getBookByISBN");
         Book book = bookDao.getBookByISBN(isbn);
         System.out.println("Book by isbn " + isbn + " :" + book);
-        return book;
+    }
+    public void getBookByAuthor(String author) {
+        System.out.println("Start method Service.getBookByAuthor");
+        List<Book> books = bookDao.getBooksByAuthor(author);
+        if(books != null) {
+            books.forEach(System.out::println);
+        }else {
+            System.out.println("Not Found");
+        }
+    }
+
+    public void countAllBooks() {
+        System.out.println("Start method Service.countAllBooks");
+        System.out.println("Count All books: ");
+        System.out.println(bookDao.countAllBooks());
     }
 }
