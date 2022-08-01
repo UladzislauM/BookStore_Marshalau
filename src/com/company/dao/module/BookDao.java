@@ -4,10 +4,13 @@ import com.company.dao.base.Book;
 
 import java.util.List;
 
-public interface UserDao {
+public interface BookDao {
     Book create(Book book);
 
-    Book getById (Long Id);
+    Book getById (Long id);
+    Book getBookByISBN (Integer isbn);
+    List<Book> getBooksByAuthor(String author);
+    int countAllBooks();
     List<Book> getAll();
 
     Book update(Book book);
