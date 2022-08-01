@@ -6,10 +6,11 @@ import java.util.Objects;
 public class Book {
     private Long id;
     private String bookname;
-    private String nameaytor;
+    private String nameauthor;
     private Date datepurchase;
     private  String status;
     private Integer price;
+    private Integer isbn;
 
     public Long getId() {
         return id;
@@ -27,12 +28,12 @@ public class Book {
         this.bookname = bookname;
     }
 
-    public String getNameaytor() {
-        return nameaytor;
+    public String getNameauthor() {
+        return nameauthor;
     }
 
-    public void setNameaytor(String nameaytor) {
-        this.nameaytor = nameaytor;
+    public void setNameauthor(String nameauthor) {
+        this.nameauthor = nameauthor;
     }
 
     public Date getDatepurchase() {
@@ -59,28 +60,37 @@ public class Book {
         this.price = price;
     }
 
+    public Integer getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(Integer isbn) {
+        this.isbn = isbn;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return Objects.equals(id, book.id) && Objects.equals(bookname, book.bookname) && Objects.equals(nameaytor, book.nameaytor) && Objects.equals(datepurchase, book.datepurchase) && Objects.equals(status, book.status) && Objects.equals(price, book.price);
+        return Objects.equals(id, book.id) && Objects.equals(bookname, book.bookname) && Objects.equals(nameauthor, book.nameauthor) && Objects.equals(datepurchase, book.datepurchase) && Objects.equals(status, book.status) && Objects.equals(price, book.price) && Objects.equals(isbn, book.isbn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, bookname, nameaytor, datepurchase, status, price);
+        return Objects.hash(id, bookname, nameauthor, datepurchase, status, price, isbn);
     }
 
     @Override
     public String toString() {
-        return "BookStore{" +
+        return "Book{" +
                 "id=" + id +
                 ", bookname='" + bookname + '\'' +
-                ", nameaytor='" + nameaytor + '\'' +
+                ", nameauthor='" + nameauthor + '\'' +
                 ", datepurchase=" + datepurchase +
                 ", status='" + status + '\'' +
                 ", price=" + price +
+                ", isbn=" + isbn +
                 '}';
     }
 }
