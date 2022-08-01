@@ -9,6 +9,8 @@ public interface BookDao {
 
     Book getById (Long id);
     Book getBookByISBN (Integer isbn);
+    List<Book> getBooksByAuthor(String author);
+    int countAllBooks();
     List<Book> getAll();
 
     Book update(Book book);
