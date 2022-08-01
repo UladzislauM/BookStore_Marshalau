@@ -1,28 +1,30 @@
-package com.company.dao.daoImpl;
+package com.company.dao.repositoty;
 
 import com.company.dao.base.Book;
-import com.company.dao.module.UserDao;
+import com.company.dao.module.BookDao;
 import com.company.dao.util.DataSourse;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoImpl implements UserDao {
+public class BookDaoImpl implements BookDao {
 
-    public static final String GET_ALL = "SELECT id, bookname, nameaytor, datepurchase, status, price" +
+    public static final String GET_ALL = "SELECT id, bookname, nameauthor, datepurchase, status, price, isbn" +
             " FROM bookstore_bh";
-    public static final String GET_BY_ID = "SELECT id, bookname, nameaytor, datepurchase, status, price" +
+    public static final String GET_BY_ID = "SELECT id, bookname, nameauthor, datepurchase, status, price, isbn" +
             " FROM bookstore_bh WHERE id = ?";
     public static final String DELETE_BY_ID = "DELETE FROM bookstore_bh WHERE id = ?";
-    public static final String ADD_USER = "INSERT INTO bookstore_bh (bookname, nameaytor, datepurchase," +
-            " status, price) VALUES (?, ?, ?, ?, ?)";
-    public static final String UPDATE_BY_ID = "UPDATE bookstore_bh SET ? = ? where Id = ?;";
-    //    public static final String GET_BY_NAME = "SELECT id, name, lastname, birthdate," +
-//            " bookname, nameaytor, datepurchase FROM bookstore_bh WHERE id = ?";
+    public static final String ADD_USER = "INSERT INTO bookstore_bh (bookname, nameauthor, datepurchase," +
+            " status, price, isbn) VALUES (?, ?, ?, ?, ?, ?)";
+    public static final String UPDATE_BY_ID = "UPDATE bookstore_bh SET bookname = ?, nameauthor = ?, datepurchase = ?," +
+            "status = ?, price = ?, isbn = ? where Id = ?;";
+    public static final String GET_BY_ISBN = "SELECT id, bookname, nameauthor, datepurchase, status, price, isbn" +
+            " FROM bookstore_bh WHERE isbn = ?";
+
     private final DataSourse dataSourse;
 
-    public UserDaoImpl(DataSourse dataSourse) {
+    public BookDaoImpl(DataSourse dataSourse) {
         this.dataSourse = dataSourse;
     }
 
@@ -37,22 +39,18 @@ public class UserDaoImpl implements UserDao {
                 Book book = new Book();
                 book.setId(resultSet.getLong("id"));
                 book.setBookname(resultSet.getString("bookname"));
-                book.setNameaytor(resultSet.getString("nameaytor"));
+                book.setNameauthor(resultSet.getString("nameauthor"));
                 book.setDatepurchase(resultSet.getDate("datepurchase"));
                 book.setStatus(resultSet.getString("status"));
                 book.setPrice(resultSet.getInt("price"));
+                book.setIsbn(resultSet.getInt("isbn"));
 
-                book.add(book);
+                books.add(book);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-//        finally {
-//            connection.close();
-//        }
-
         return books;
-
     }
 
     @Override
@@ -66,10 +64,11 @@ public class UserDaoImpl implements UserDao {
                 Book book = new Book();
                 book.setId(resultSet.getLong("id"));
                 book.setBookname(resultSet.getString("bookname"));
-                book.setNameaytor(resultSet.getString("nameaytor"));
+                book.setNameauthor(resultSet.getString("nameauthor"));
                 book.setDatepurchase(resultSet.getDate("datepurchase"));
                 book.setStatus(resultSet.getString("status"));
                 book.setPrice(resultSet.getInt("price"));
+                book.setIsbn(resultSet.getInt("isbn"));
 
                 return book;
             }
@@ -86,14 +85,15 @@ public class UserDaoImpl implements UserDao {
             PreparedStatement statement = connection.prepareStatement(ADD_USER);
 
             statement.setString(1, book.getBookname());
-            statement.setString(2, book.getNameaytor());
+            statement.setString(2, book.getNameauthor());
             statement.setDate(3, book.getDatepurchase());
             statement.setString(4, book.getStatus());
             statement.setInt(5, book.getPrice());
+            statement.setInt(6, book.getIsbn());
 
-//            int count = statement.executeUpdate();
-
-            return book;
+            if (statement.executeUpdate() == 1) {
+                return book;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -106,14 +106,18 @@ public class UserDaoImpl implements UserDao {
         try {
             Connection connection = dataSourse.getConnection();
             PreparedStatement statement = connection.prepareStatement(UPDATE_BY_ID);
-//передать, сравнить, выделить разное, добавить
+
             statement.setString(1, book.getBookname());
-            statement.setString(2, book.getNameaytor());
+            statement.setString(2, book.getNameauthor());
             statement.setDate(3, book.getDatepurchase());
+            statement.setString(4, book.getStatus());
+            statement.setInt(5, book.getPrice());
+            statement.setInt(6, book.getIsbn());
+            statement.setLong(7, book.getId());
 
-//            int count = statement.executeUpdate();
-
-            return book;
+            if (statement.executeUpdate() == 1) {
+                return book;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -136,5 +140,29 @@ public class UserDaoImpl implements UserDao {
             e.printStackTrace();
         }
         return false;
+    }
+    @Override
+    public Book getBookByISBN(Integer isbn) {
+        try {
+            Connection connection = dataSourse.getConnection();
+            PreparedStatement statement = connection.prepareStatement(GET_BY_ISBN);
+            statement.setLong(1, isbn);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Book book = new Book();
+                book.setId(resultSet.getLong("id"));
+                book.setBookname(resultSet.getString("bookname"));
+                book.setNameauthor(resultSet.getString("nameauthor"));
+                book.setDatepurchase(resultSet.getDate("datepurchase"));
+                book.setStatus(resultSet.getString("status"));
+                book.setPrice(resultSet.getInt("price"));
+                book.setIsbn(resultSet.getInt("isbn"));
+
+                return book;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
