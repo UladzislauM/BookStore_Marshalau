@@ -1,16 +1,17 @@
 package com.company.dao.base;
 
-import java.sql.Date;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Book {
     private Long id;
-    private String bookname;
-    private String nameauthor;
-    private Date datepurchase;
-    private  String status;
-    private Integer price;
-    private Integer isbn;
+    private String title;
+    private String nameAuthor;
+    private LocalDate dateReleaseBook;
+    private String status;
+    private BigDecimal price;
+    private String isbn;
 
     public Long getId() {
         return id;
@@ -20,28 +21,28 @@ public class Book {
         this.id = id;
     }
 
-    public String getBookname() {
-        return bookname;
+    public String getTitle() {
+        return title;
     }
 
-    public void setBookname(String bookname) {
-        this.bookname = bookname;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getNameauthor() {
-        return nameauthor;
+    public String getNameAuthor() {
+        return nameAuthor;
     }
 
-    public void setNameauthor(String nameauthor) {
-        this.nameauthor = nameauthor;
+    public void setNameAuthor(String nameAuthor) {
+        this.nameAuthor = nameAuthor;
     }
 
-    public Date getDatepurchase() {
-        return datepurchase;
+    public LocalDate getDateReleaseBook() {
+        return dateReleaseBook;
     }
 
-    public void setDatepurchase(Date datepurchase) {
-        this.datepurchase = datepurchase;
+    public void setDateReleaseBook(LocalDate dateReleaseBook) {
+        this.dateReleaseBook = dateReleaseBook;
     }
 
     public String getStatus() {
@@ -52,19 +53,19 @@ public class Book {
         this.status = status;
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public Integer getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Integer isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
@@ -73,24 +74,24 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return Objects.equals(id, book.id) && Objects.equals(bookname, book.bookname) && Objects.equals(nameauthor, book.nameauthor) && Objects.equals(datepurchase, book.datepurchase) && Objects.equals(status, book.status) && Objects.equals(price, book.price) && Objects.equals(isbn, book.isbn);
+        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(nameAuthor, book.nameAuthor) && Objects.equals(dateReleaseBook, book.dateReleaseBook) && Objects.equals(status, book.status) && Objects.equals(price, book.price) && Objects.equals(isbn, book.isbn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, bookname, nameauthor, datepurchase, status, price, isbn);
+        return Objects.hash(id, title, nameAuthor, dateReleaseBook, status, price, isbn);
     }
 
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
-                ", bookname='" + bookname + '\'' +
-                ", nameauthor='" + nameauthor + '\'' +
-                ", datepurchase=" + datepurchase +
+                ", title='" + title + '\'' +
+                ", nameAuthor='" + nameAuthor + '\'' +
+                ", bookReleaseDate=" + dateReleaseBook +
                 ", status='" + status + '\'' +
                 ", price=" + price +
-                ", isbn=" + isbn +
+                ", isbn='" + isbn + '\'' +
                 '}';
     }
 }
