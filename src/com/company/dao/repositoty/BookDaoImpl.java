@@ -118,6 +118,7 @@ public class BookDaoImpl implements BookDao {
             Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(UPDATE_BY_ID);
             extractedBook(book, statement);
+            statement.setLong(7, book.getId());
             if (statement.executeUpdate() == 1) {
                 return getById(book.getId());
             }

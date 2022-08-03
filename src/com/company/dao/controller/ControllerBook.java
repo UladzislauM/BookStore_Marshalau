@@ -1,6 +1,5 @@
 package com.company.dao.controller;
 
-import com.company.dao.DTO.BookDTO;
 import com.company.dao.entity.Book;
 import com.company.dao.repositoty.BookDaoImpl;
 import com.company.dao.service.BookService;
@@ -37,7 +36,6 @@ public class ControllerBook {
                 if (!Pattern.matches("getauthor\\W\\w+\\W*\\w+\\W", commandConsole)) {
                     commandConsole = commandConsole.toLowerCase();
                 }
-
                 if (commandConsole.matches("all")) {
                     List<Book> books = bookService.getAllBooks();
                     System.out.println("AllBooks (abbreviated representation): ");
@@ -46,21 +44,22 @@ public class ControllerBook {
                                 books.get(i).getId(), books.get(i).getTitle(), books.get(i).getNameAuthor(),
                                 books.get(i).getDateReleaseBook());
                     }
-
                 } else if (Pattern.matches("get\\W\\d*\\W", commandConsole)) {
                     Pattern patternGetId = Pattern.compile("\\d+");
                     Matcher matcher = patternGetId.matcher(commandConsole);
                     if (matcher.find()) {
-                        bookService.getBookById(Long.parseLong(matcher.group()));
+                        System.out.println("Book by number " + matcher.group() + " :" + bookService.getBookById(Long.parseLong(matcher.group())));
                     }
                 } else if (Pattern.matches("add", commandConsole)) {
-                    bookService.addBookById(addBookKeyBoard(in));
+                    System.out.println("New Book: ");
+                    System.out.println(bookService.createBook(addBookKeyBoard(in)));
                 } else if (Pattern.matches("update\\W\\d*\\W", commandConsole)) {
-                    Book book = new Book();
                     Pattern patternUpdateId = Pattern.compile("\\d+");
                     Matcher matcher = patternUpdateId.matcher(commandConsole);
                     if (matcher.find()) {
-                        bookService.updateBookById(addBookKeyBoard(in));
+                        Book book = addBookKeyBoard(in);
+                        book.setId(Long.parseLong(matcher.group()));
+                        System.out.println(bookService.updateBookById(book));
                     }
                 } else if (Pattern.matches("delete\\W\\d*\\W", commandConsole)) {
                     Pattern patternDeleteId = Pattern.compile("\\d+");

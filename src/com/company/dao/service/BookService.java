@@ -7,19 +7,20 @@ import java.util.List;
 
 public class BookService {
     private final BookDao bookDao;
-    private final BookEntity bookEntity = new BookEntity();
 
     public BookService(BookDao bookDao) {
         this.bookDao = bookDao;
     }
+
     public List<Book> getAllBooks() {
         System.out.println("Start method Service.GetAllBooks");
 
         return bookDao.getAll();
     }
-    public void getBookById(Long id) {
+
+    public Book getBookById(Long id) {
         System.out.println("Start method Service.getBooksByID");
-        System.out.println("Book by number " + id + " :" + bookDao.getById(id));
+        return bookDao.getById(id);
     }
 
     public void deleteBookById(Long id) {
@@ -31,15 +32,15 @@ public class BookService {
         }
     }
 
-    public void addBookById(Book book) {
+    public Book createBook(Book book) {
         System.out.println("Start method Service.addBooksByID");
-        System.out.println(bookDao.create(book));
+        return bookDao.create(book);
     }
 
-    public void updateBookById(Book book) {
+    public Book updateBookById(Book book) {
         System.out.println("Start method Service.updateBookById");
-        bookDao.update(book);
-        System.out.println(book);
+
+        return bookDao.update(book);
     }
 
     public void getBookByISBN(String isbn) {
