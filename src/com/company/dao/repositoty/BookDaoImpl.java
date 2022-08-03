@@ -6,7 +6,6 @@ import com.company.dao.util.DataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
-
 import java.util.List;
 
 public class BookDaoImpl implements BookDao {
@@ -51,7 +50,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book getById(Long id) {
         Connection connection = dataSource.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(GET_BY_ID);){
+        try (PreparedStatement statement = connection.prepareStatement(GET_BY_ID);) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -66,7 +65,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book getBookByISBN(String isbn) {
         Connection connection = dataSource.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(GET_BY_ISBN);){
+        try (PreparedStatement statement = connection.prepareStatement(GET_BY_ISBN);) {
             statement.setString(1, isbn);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -81,7 +80,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public List<Book> getBooksByAuthor(String author) {
         Connection connection = dataSource.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(GET_BY_AUTHOR);){
+        try (PreparedStatement statement = connection.prepareStatement(GET_BY_AUTHOR);) {
             List<Book> books = new ArrayList<>();
             statement.setString(1, author);
             ResultSet resultSet = statement.executeQuery();
@@ -98,7 +97,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book create(Book book) {
         Connection connection = dataSource.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(ADD_USER, Statement.RETURN_GENERATED_KEYS)){
+        try (PreparedStatement statement = connection.prepareStatement(ADD_USER, Statement.RETURN_GENERATED_KEYS)) {
             extractedBook(book, statement);
             if (statement.executeUpdate() == 1) {
                 ResultSet resultSet = statement.getGeneratedKeys();
