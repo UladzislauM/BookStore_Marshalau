@@ -1,10 +1,10 @@
-package com.company.dao.base;
+package com.company.dao.DTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Book {
+public class BookDTO {
     private Long id;
     private String title;
     private String nameAuthor;
@@ -73,8 +73,8 @@ public class Book {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(nameAuthor, book.nameAuthor) && Objects.equals(dateReleaseBook, book.dateReleaseBook) && Objects.equals(status, book.status) && Objects.equals(price, book.price) && Objects.equals(isbn, book.isbn);
+        BookDTO bookDTO = (BookDTO) o;
+        return Objects.equals(id, bookDTO.id) && Objects.equals(title, bookDTO.title) && Objects.equals(nameAuthor, bookDTO.nameAuthor) && Objects.equals(dateReleaseBook, bookDTO.dateReleaseBook) && Objects.equals(status, bookDTO.status) && Objects.equals(price, bookDTO.price) && Objects.equals(isbn, bookDTO.isbn);
     }
 
     @Override
@@ -84,11 +84,11 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "BookDTO{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", nameAuthor='" + nameAuthor + '\'' +
-                ", bookReleaseDate=" + dateReleaseBook +
+                ", dateReleaseBook=" + dateReleaseBook +
                 ", status='" + status + '\'' +
                 ", price=" + price +
                 ", isbn='" + isbn + '\'' +

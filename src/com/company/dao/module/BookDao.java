@@ -1,6 +1,6 @@
 package com.company.dao.module;
 
-import com.company.dao.base.Book;
+import com.company.dao.entity.Book;
 
 import java.util.List;
 

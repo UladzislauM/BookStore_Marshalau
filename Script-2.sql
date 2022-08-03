@@ -29,3 +29,24 @@ VALUES ('7Navikov', 'S.Kovy', '25-12-1991', 'in stock', 32.00, 9783164484100),
 ('What Doesn’t Kill Us', 'S.Carney', '20-11-2011', 'in stock', 26.00, 9783164484344),
 ('Sleeping Beauties', 'S.King', '01-09-2017', 'in stock', 45.70, 9783164484355),
 ('In search of the lost orpheus', 'A.Lurie', '04-04-1912', 'in stock', 84.30, 9783164484366);
+
+UPDATE books SET isbn = '978-3-16-148410-0' WHERE id = 73;
+UPDATE books SET isbn = '978-3-16-148410-1' WHERE id = 74;
+UPDATE books SET isbn = '978-3-16-148410-2' WHERE id = 75;
+UPDATE books SET isbn = '978-3-16-148410-3' WHERE id = 76;
+UPDATE books SET isbn = '978-3-16-148410-4' WHERE id = 77;
+UPDATE books SET isbn = '978-3-16-148410-5' WHERE id = 78;
+UPDATE books SET isbn = '978-3-16-148410-6' WHERE id = 79;
+UPDATE books SET isbn = '978-3-16-148411-0' WHERE id = 80;
+UPDATE books SET isbn = '978-3-16-148411-1' WHERE id = 81;
+UPDATE books SET isbn = '978-3-16-148411-2' WHERE id = 82;
+UPDATE books SET isbn = '978-3-16-148411-3' WHERE id = 83;
+UPDATE books SET isbn = '978-3-16-148411-4' WHERE id = 84;
+UPDATE books SET isbn = '978-3-16-148411-5' WHERE id = 85;
+UPDATE books SET isbn = '978-3-16-148411-6' WHERE id = 86;
+UPDATE books SET isbn = '978-3-16-148412-0' WHERE id = 87;
+UPDATE books SET isbn = '978-3-16-148412-1' WHERE id = 88;
+UPDATE books SET isbn = '978-3-16-148412-2' WHERE id = 89;
+UPDATE books SET isbn = '978-3-16-148412-3' WHERE id = 90;
+UPDATE books SET isbn = '978-3-16-148412-4' WHERE id = 91;
+UPDATE books SET isbn = '978-3-16-148412-5' WHERE id = 92;
