@@ -1,22 +1,24 @@
 package com.company.dao.util;
 
+import com.company.dao.resources.PropetiesLoader;
+
 import java.io.Closeable;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DataSource implements Closeable {
-    private static final String URL = "jdbc:postgresql://localhost:5432/bookstore_bh";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "Chestor25";
-
     private Connection connection;
 
     public Connection getConnection() {
         if (connection == null) {
             try {
-                connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            } catch (SQLException e) {
+                Properties conf = PropetiesLoader.loadProperties();
+                connection = DriverManager.getConnection(conf.getProperty("URL"),
+                        conf.getProperty("USER"), conf.getProperty("PASSWORD"));
+            } catch (SQLException | IOException e) {
                 e.printStackTrace();
             }
         }

@@ -63,7 +63,7 @@ public class ControllerBook {
                             Book book = addBookKeyBoard(in);
                             book.setId(Long.parseLong(commandConsoleArr[1]));
                             System.out.println(bookService.updateBookById(book));
-                        }else {
+                        } else {
                             System.out.println("Book not found.");
                         }
                         break;
