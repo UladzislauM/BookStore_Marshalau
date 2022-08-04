@@ -1,6 +1,7 @@
 package com.company.dao.controller;
 
 import com.company.dao.entity.Book;
+import com.company.dao.entity.Status;
 import com.company.dao.repositoty.BookDaoImpl;
 import com.company.dao.service.BookService;
 import com.company.dao.util.DataSource;
@@ -46,7 +47,7 @@ public class ControllerBook {
                         }
                         break;
                     case "get":
-                        if (bookService.getBookById(Long.parseLong(commandConsoleArr[1])).toString() != null) {
+                        if (bookService.getBookById(Long.parseLong(commandConsoleArr[1])) != null) {
                             System.out.println("Book by number ".concat(commandConsoleArr[1]).concat(" :")
                                     .concat(bookService.getBookById(Long.parseLong(commandConsoleArr[1])).toString()));
                         } else {
@@ -58,9 +59,13 @@ public class ControllerBook {
                         System.out.println(bookService.createBook(addBookKeyBoard(in)));
                         break;
                     case "update":
-                        Book book = addBookKeyBoard(in);
-                        book.setId(Long.parseLong(commandConsoleArr[1]));
-                        System.out.println(bookService.updateBookById(book));
+                        if (bookService.getBookById(Long.parseLong(commandConsoleArr[1])) != null) {
+                            Book book = addBookKeyBoard(in);
+                            book.setId(Long.parseLong(commandConsoleArr[1]));
+                            System.out.println(bookService.updateBookById(book));
+                        }else {
+                            System.out.println("Book not found.");
+                        }
                         break;
                     case "delete":
                         if (bookService.deleteBookById(Long.parseLong(commandConsoleArr[1]))) {
@@ -112,7 +117,7 @@ public class ControllerBook {
         book.setDateReleaseBook(LocalDate.of(in.nextInt(), in.nextInt(), in.nextInt()));
         in.nextLine();
         System.out.println("Write BookStore status price: ");
-        book.setStatus(in.nextLine());
+        book.setStatus(Status.valueOf(in.nextLine()));
         System.out.println("Write BookStore price: ");
         book.setPrice(in.nextBigDecimal());
         in.nextLine();

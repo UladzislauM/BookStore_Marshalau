@@ -1,6 +1,7 @@
 package com.company.dao.repositoty;
 
 import com.company.dao.entity.Book;
+import com.company.dao.entity.Status;
 import com.company.dao.module.BookDao;
 import com.company.dao.util.DataSource;
 
@@ -163,7 +164,7 @@ public class BookDaoImpl implements BookDao {
         book.setTitle(resultSet.getString("title"));
         book.setNameAuthor(resultSet.getString("name_author"));
         book.setDateReleaseBook(resultSet.getTimestamp("date_release_book").toLocalDateTime().toLocalDate());
-        book.setStatus(resultSet.getString("status"));
+        book.setStatus(Status.valueOf(resultSet.getString("status")));//как запросить enum в таблице???
         book.setPrice(resultSet.getBigDecimal("price"));
         book.setIsbn(resultSet.getString("isbn"));
         return book;
@@ -173,7 +174,7 @@ public class BookDaoImpl implements BookDao {
         statement.setString(1, book.getTitle());
         statement.setString(2, book.getNameAuthor());
         statement.setDate(3, Date.valueOf(book.getDateReleaseBook()));
-        statement.setString(4, book.getStatus());
+        statement.setString(4, String.valueOf(book.getStatus()));
         statement.setBigDecimal(5, book.getPrice());
         statement.setString(6, book.getIsbn());
     }

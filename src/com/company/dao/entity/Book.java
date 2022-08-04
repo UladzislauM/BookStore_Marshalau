@@ -9,7 +9,7 @@ public class Book {
     private String title;
     private String nameAuthor;
     private LocalDate dateReleaseBook;
-    private String status;
+    private Status status;
     private BigDecimal price;
     private String isbn;
 
@@ -45,11 +45,11 @@ public class Book {
         this.dateReleaseBook = dateReleaseBook;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
