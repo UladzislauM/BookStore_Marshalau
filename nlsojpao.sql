@@ -1,5 +1,5 @@
-	
-create type role_user as ENUM ('admin', 'manager');
+CREATE TYPE role_user as ENUM ('ADMIN', 'MANAGER');
+
 CREATE TABLE users(
  id                  BIGSERIAL PRIMARY KEY NOT NULL,
  name               CHARACTER VARYING (100) NOT NULL,
@@ -10,8 +10,8 @@ CREATE TABLE users(
 );
 
 INSERT INTO users (name, last_name, email, password, role) 
-VALUES ('Yauheni', 'Hlaholeu', 'jek94@gmail.com', '12qwaszx', 'admin'),
-('Uladzislau', 'Solovev', 'sol44@yandex.by', 'qazxsw21', 'manager'),
-('Haliana', 'Sidoric', 'galina_sid@gmail.com', 'sid93LL', 'manager'),
-('Lana', 'Dimidova', 'dlana@mail.ru', 'vfAz1234', 'manager'),
-('Andrey', 'Aksenov', 'AKsin@Gmail.com','12345678OOp', 'manager');
+VALUES ('Yauheni', 'Hlaholeu', 'jek94@gmail.com', '12qwaszx', 'ADMIN'),
+('Uladzislau', 'Solovev', 'sol44@yandex.by', 'qazxsw21', 'MANAGER'),
+('Haliana', 'Sidoric', 'galina_sid@gmail.com', 'sid93LL', 'MANAGER'),
+('Lana', 'Dimidova', 'dlana@mail.ru', 'vfAz1234', 'MANAGER'),
+('Andrey', 'Aksenov', 'AKsin@Gmail.com','12345678OOp', 'MANAGER');

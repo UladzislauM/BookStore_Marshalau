@@ -53,9 +53,8 @@ UPDATE books SET isbn = '978-3-16-148412-5' WHERE id = 92;
 
 DELETE FROM books WHERE id BETWEEN 94 AND 107; 
 
-UPDATE books SET status = 'in_stock' WHERE ID BETWEEN 73 AND 92;
+UPDATE books SET status = 'IN_STOCK' WHERE ID BETWEEN 73 AND 92;
 
-create type status_book as ENUM ('in_stock', 'sold', 'reserve', 'delivery_expected', 'out_of_stock');
+CREATE TYPE status_book AS ENUM ('IN_STOCK', 'SOLD', 'RESERVE', 'DELIVERY_EXPECTED', 'OUT_OF_STOCK');
 
-ALTER TABLE books ALTER COLUMN status TYPE status_book USING 'in_stock';
-
+ALTER TABLE books ALTER COLUMN status TYPE status_book USING 'IN_STOCK';

@@ -1,7 +1,7 @@
 package com.company.dao.controller;
 
 import com.company.dao.entity.Book;
-import com.company.dao.entity.Status;
+import com.company.dao.entity.StatusBook;
 import com.company.dao.repositoty.BookDaoImpl;
 import com.company.dao.service.BookService;
 import com.company.dao.util.DataSource;
@@ -117,7 +117,7 @@ public class ControllerBook {
         book.setDateReleaseBook(LocalDate.of(in.nextInt(), in.nextInt(), in.nextInt()));
         in.nextLine();
         System.out.println("Write BookStore status price: ");
-        book.setStatus(Status.valueOf(in.nextLine()));
+        book.setStatus(StatusBook.valueOf(in.nextLine()));
         System.out.println("Write BookStore price: ");
         book.setPrice(in.nextBigDecimal());
         in.nextLine();

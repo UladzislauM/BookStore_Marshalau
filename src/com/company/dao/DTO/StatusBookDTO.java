@@ -1,6 +1,6 @@
-package com.company.dao.entity;
+package com.company.dao.DTO;
 
-public enum Status {
+public enum StatusBookDTO {
     IN_STOCK,
     SOLD,
     RESERVE,
