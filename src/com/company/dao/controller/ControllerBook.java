@@ -25,6 +25,7 @@ public class ControllerBook {
                     - delete{ID} - delete book;
                     - getisbn{ISBN} - get Book by ISBN;
                     - getauthor{aythor} - gety book(s) by author;
+                    - sumbyauthor - sum book price by author;
                     - exit - exit;
                      Enter the command:
                     """);
@@ -83,6 +84,9 @@ public class ControllerBook {
                     case "countall":
                         System.out.println("Count All books: ");
                         System.out.println(bookService.countAllBooks());
+                        break;
+                    case "sumbyauthor":
+                        System.out.println(bookService.sumBooksByAuthor(commandConsoleArr[1]));
                         break;
                     case "exit":
                         exit = false;
