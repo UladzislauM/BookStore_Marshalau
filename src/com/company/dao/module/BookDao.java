@@ -13,11 +13,12 @@ public interface BookDao {
 
     List<Book> getBooksByAuthor(String author);
 
-    long countAllBooks();
+    Long countAllBooks();
 
     List<Book> getAll();
 
     Book update(Book book);
 
     boolean delete(Long id);
+
 }
