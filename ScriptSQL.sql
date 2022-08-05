@@ -50,3 +50,20 @@ UPDATE books SET isbn = '978-3-16-148412-2' WHERE id = 89;
 UPDATE books SET isbn = '978-3-16-148412-3' WHERE id = 90;
 UPDATE books SET isbn = '978-3-16-148412-4' WHERE id = 91;
 UPDATE books SET isbn = '978-3-16-148412-5' WHERE id = 92;
+
+DELETE FROM books WHERE id BETWEEN 94 AND 107; 
+
+UPDATE books SET status = 'IN_STOCK' WHERE ID BETWEEN 73 AND 92;
+
+CREATE TYPE status_book AS ENUM ('IN_STOCK', 'SOLD', 'RESERVE', 'DELIVERY_EXPECTED', 'OUT_OF_STOCK');
+
+ALTER TABLE books ALTER COLUMN status TYPE status_book USING 'IN_STOCK';
+
+ALTER TABLE books ALTER COLUMN status TYPE CHARACTER VARYING (30);
+
+
+CREATE TABLE status(
+ id                  BIGSERIAL PRIMARY KEY NOT NULL,
+ num                 INTEGER NOT NULL,
+ status_name         CHARACTER VARYING (60),
+);

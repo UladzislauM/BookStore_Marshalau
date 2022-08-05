@@ -1,6 +1,7 @@
 package com.company.dao.repositoty;
 
 import com.company.dao.entity.Book;
+import com.company.dao.entity.StatusBook;
 import com.company.dao.module.BookDao;
 import com.company.dao.util.DataSource;
 
@@ -18,7 +19,7 @@ public class BookDaoImpl implements BookDao {
     public static final String GET_BY_AUTHOR = "SELECT id, title, name_author, date_release_book, status, price, isbn" +
             " FROM books WHERE name_author = ?";
     public static final String DELETE_BY_ID = "DELETE FROM books WHERE id = ?";
-    public static final String ADD_USER = "INSERT INTO books (title, name_author, date_release_book," +
+    public static final String ADD_BOOK = "INSERT INTO books (title, name_author, date_release_book," +
             " status, price, isbn) VALUES (?, ?, ?, ?, ?, ?)";
     public static final String UPDATE_BY_ID = "UPDATE books SET title = ?, name_author = ?, date_release_book = ?," +
             "status = ?, price = ?, isbn = ? where Id = ?;";
@@ -97,7 +98,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book create(Book book) {
         Connection connection = dataSource.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(ADD_USER, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement(ADD_BOOK, Statement.RETURN_GENERATED_KEYS)) {
             extractedBook(book, statement);
             if (statement.executeUpdate() == 1) {
                 ResultSet resultSet = statement.getGeneratedKeys();
@@ -143,7 +144,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public long countAllBooks() {
+    public Long countAllBooks() {
         try {
             Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement();
@@ -163,7 +164,7 @@ public class BookDaoImpl implements BookDao {
         book.setTitle(resultSet.getString("title"));
         book.setNameAuthor(resultSet.getString("name_author"));
         book.setDateReleaseBook(resultSet.getTimestamp("date_release_book").toLocalDateTime().toLocalDate());
-        book.setStatus(resultSet.getString("status"));
+        book.setStatus(StatusBook.valueOf(resultSet.getString("status")));
         book.setPrice(resultSet.getBigDecimal("price"));
         book.setIsbn(resultSet.getString("isbn"));
         return book;
@@ -173,7 +174,7 @@ public class BookDaoImpl implements BookDao {
         statement.setString(1, book.getTitle());
         statement.setString(2, book.getNameAuthor());
         statement.setDate(3, Date.valueOf(book.getDateReleaseBook()));
-        statement.setString(4, book.getStatus());
+        statement.setString(4, String.valueOf(book.getStatus()));
         statement.setBigDecimal(5, book.getPrice());
         statement.setString(6, book.getIsbn());
     }
