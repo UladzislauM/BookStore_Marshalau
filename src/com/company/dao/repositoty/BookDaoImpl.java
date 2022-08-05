@@ -143,6 +143,7 @@ public class BookDaoImpl implements BookDao {
         return false;
     }
 
+
     @Override
     public Long countAllBooks() {
         try {

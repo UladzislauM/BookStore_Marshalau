@@ -67,3 +67,4 @@ CREATE TABLE status(
  num                 INTEGER NOT NULL,
  status_name         CHARACTER VARYING (60),
 );
+

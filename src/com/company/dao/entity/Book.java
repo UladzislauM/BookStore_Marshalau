@@ -13,6 +13,7 @@ public class Book {
     private BigDecimal price;
     private String isbn;
 
+
     public Long getId() {
         return id;
     }

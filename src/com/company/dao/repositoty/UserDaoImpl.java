@@ -107,6 +107,7 @@ public class UserDaoImpl implements UserDao {
         return false;
     }
 
+
     @Override
     public Long countAllUsers() {
         try {

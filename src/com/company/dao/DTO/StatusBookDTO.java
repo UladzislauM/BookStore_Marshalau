@@ -6,4 +6,5 @@ public enum StatusBookDTO {
     RESERVE,
     DELIVERY_EXPECTED,
     OUT_OF_STOCK
+
 }

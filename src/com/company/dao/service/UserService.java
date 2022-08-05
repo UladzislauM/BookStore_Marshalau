@@ -41,4 +41,5 @@ public class UserService {
         System.out.println("Start method Service.countAllUsers");
         return userDao.countAllUsers();
     }
+
 }

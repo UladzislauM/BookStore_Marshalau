@@ -9,6 +9,7 @@ CREATE TABLE users(
  role               role_user
 );
 
+
 INSERT INTO users (name, last_name, email, password, role) 
 VALUES ('Yauheni', 'Hlaholeu', 'jek94@gmail.com', '12qwaszx', 'ADMIN'),
 ('Uladzislau', 'Solovev', 'sol44@yandex.by', 'qazxsw21', 'MANAGER'),
