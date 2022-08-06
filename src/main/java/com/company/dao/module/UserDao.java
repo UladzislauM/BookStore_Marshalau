@@ -18,4 +18,7 @@ public interface UserDao {
 
     boolean delete(Long id);
 
+    public User getByEmail(String email);
+    public List<User> getUserByLastName(String lastName);
+
 }

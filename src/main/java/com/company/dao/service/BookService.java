@@ -1,6 +1,7 @@
 package com.company.dao.service;
 
 import com.company.dao.entity.Book;
+import com.company.dao.entity.User;
 import com.company.dao.module.BookDao;
 
 import java.math.BigDecimal;
@@ -15,38 +16,63 @@ public class BookService {
 
     public List<Book> getAllBooks() {
         System.out.println("Start method Service.GetAllBooks");
-
-        return bookDao.getAll();
+        List<Book> books = bookDao.getAll();
+        if(books == null) {
+            throw new RuntimeException("There are no books in the table");
+        }
+        return books;
     }
 
     public Book getBookById(Long id) {
         System.out.println("Start method Service.getBooksByID");
-        return bookDao.getById(id);
+        Book book = bookDao.getById(id);
+        if(book == null){
+            throw new RuntimeException("Book not found.");
+        }
+        return book;
     }
 
-    public boolean deleteBookById(Long id) {
+    public void deleteBookById(Long id) {
         System.out.println("Start method Service.deleteBooksByID");
-        return bookDao.delete(id);
+        if(!bookDao.delete(id)) {
+            throw new RuntimeException("Such a user cannot be deleted");
+        }
     }
 
     public Book createBook(Book book) {
         System.out.println("Start method Service.addBooksByID");
-        return bookDao.create(book);
+        book = bookDao.create(book);
+        if(book == null) {
+            throw new RuntimeException("Such a book cannot be added");
+        }
+        return book;
     }
 
     public Book updateBookById(Book book) {
         System.out.println("Start method Service.updateBookById");
-        return bookDao.update(book);
+        book = bookDao.update(book);
+        if(book == null) {
+            throw new RuntimeException("Such a book cannot be updated");
+        }
+        return book;
     }
 
     public Book getBookByISBN(String isbn) {
         System.out.println("Start method Service.getBookByISBN");
-        return bookDao.getBookByISBN(isbn);
+        Book book = bookDao.getBookByISBN(isbn);
+        if(book == null) {
+            throw new RuntimeException("Book not found.");
+        }
+        return book;
     }
 
     public List<Book> getBookByAuthor(String author) {
         System.out.println("Start method Service.getBookByAuthor");
-        return bookDao.getBooksByAuthor(author);
+        List<Book> books = bookDao.getBooksByAuthor(author);
+        if(books == null) {
+            throw new RuntimeException("Book not found.");
+        }
+        return books;
     }
 
     public Long countAllBooks() {
@@ -64,7 +90,7 @@ public class BookService {
             }
             return sum;
         }
-        return null;
+        throw new RuntimeException("Books not found");
     }
 
 }

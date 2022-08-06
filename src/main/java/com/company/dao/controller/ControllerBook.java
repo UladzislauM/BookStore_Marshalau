@@ -4,7 +4,7 @@ import com.company.dao.entity.Book;
 import com.company.dao.entity.StatusBook;
 import com.company.dao.repositoty.BookDaoImpl;
 import com.company.dao.service.BookService;
-import com.company.dao.util.DataSource;
+import com.company.dao.util.DataSourcePostgres;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -12,10 +12,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ControllerBook {
-    public void consoleInterface() {
-        try (DataSource dataSource = new DataSource()) {
-            Scanner in = new Scanner(System.in);
-            BookService bookService = new BookService(new BookDaoImpl(dataSource));
+    public void consoleInterface(Scanner in) {
+        try (DataSourcePostgres dataSourcePostgres = new DataSourcePostgres()) {
+            BookService bookService = new BookService(new BookDaoImpl(dataSourcePostgres));
 
             System.out.println("""
                      Commands:
@@ -49,51 +48,33 @@ public class ControllerBook {
                         }
                         break;
                     case "get":
-                        if (bookService.getBookById(Long.parseLong(commandConsoleArr[1])) != null) {
-                            System.out.println("Book by number ".concat(commandConsoleArr[1]).concat(" :")
-                                    .concat(bookService.getBookById(Long.parseLong(commandConsoleArr[1])).toString()));
-                        } else {
-                            System.out.println("Book not found.");
-                        }
+                        System.out.println("Book by number ".concat(commandConsoleArr[1]).concat(" :")
+                                .concat(bookService.getBookById(Long.parseLong(commandConsoleArr[1])).toString()));
                         break;
                     case "add":
-                        System.out.println("New Book: ");
-                        System.out.println(bookService.createBook(addBookKeyBoard(in)));
+                        System.out.println("New Book: ".concat(bookService.createBook(addBookKeyBoard(in)).toString()));
                         break;
                     case "update":
-                        if (bookService.getBookById(Long.parseLong(commandConsoleArr[1])) != null) {
-                            Book book = addBookKeyBoard(in);
-                            book.setId(Long.parseLong(commandConsoleArr[1]));
-                            System.out.println(bookService.updateBookById(book));
-                        } else {
-                            System.out.println("Book not found.");
-                        }
+                        System.out.println("Book Updated : ".concat(bookService.updateBookById(addBookKeyBoard(in)).toString()));
                         break;
                     case "delete":
-                        if (bookService.deleteBookById(Long.parseLong(commandConsoleArr[1]))) {
-                            System.out.println("Delete true");
-                        } else {
-                            System.out.println("Delete false");
-                        }
+                        bookService.deleteBookById(Long.parseLong(commandConsoleArr[1]));
+                        System.out.println("Book Deleted : ".concat(commandConsoleArr[1]));
                         break;
                     case "getisbn":
-                        System.out.println("Book by isbn ".concat(commandConsoleArr[1]).concat(" :")
+                        System.out.println("Book by isbn ".concat(commandConsoleArr[1]).concat(" : ")
                                 .concat(bookService.getBookByISBN(commandConsoleArr[1]).toString()));
                         break;
                     case "getauthor":
-                        books = bookService.getBookByAuthor(commandConsoleArr[1]);
-                        if (books != null) {
-                            books.forEach(System.out::println);
-                        } else {
-                            System.out.println("Not Found");
-                        }
+                        System.out.println(bookService.getBookById(Long.parseLong(commandConsoleArr[0])).getNameAuthor().concat(" write book(s) on Store: "));
+                        bookService.getBookByAuthor(commandConsoleArr[1])
+                                .forEach(System.out::println);
                         break;
                     case "countall":
-                        System.out.println("Count All books: ");
-                        System.out.println(bookService.countAllBooks());
+                        System.out.println("Count All books: ".concat(bookService.countAllBooks().toString()));
                         break;
                     case "sumbyauthor":
-                        System.out.println(bookService.sumBooksByAuthor(commandConsoleArr[1]));
+                        System.out.println("All Authors: ".concat(bookService.sumBooksByAuthor(commandConsoleArr[1]).toString()));
                         break;
                     case "exit":
                         exit = false;
@@ -120,8 +101,8 @@ public class ControllerBook {
         in.nextLine();
         System.out.println("Write BookStore status (IN_STOCK, SOLD, RESERVE, DELIVERY_EXPECTED, OUT_OF_STOCK):");
         String statusStr = in.nextLine();
-        while(!isValidStatus(statusStr)){
-                System.out.println("Status not find");
+        while (!isValidStatus(statusStr)) {
+            System.out.println("Status not find");
             statusStr = in.nextLine();
         }
         book.setStatus(StatusBook.valueOf(statusStr));
@@ -132,6 +113,7 @@ public class ControllerBook {
         book.setIsbn(in.nextLine());
         return book;
     }
+
     public boolean isValidStatus(String status) {
         return Arrays.stream(StatusBook.values())
                 .anyMatch(e -> e.toString().equals(status));

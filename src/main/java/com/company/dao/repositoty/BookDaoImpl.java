@@ -3,7 +3,7 @@ package com.company.dao.repositoty;
 import com.company.dao.entity.Book;
 import com.company.dao.entity.StatusBook;
 import com.company.dao.module.BookDao;
-import com.company.dao.util.DataSource;
+import com.company.dao.util.DataSourcePostgres;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,17 +25,17 @@ public class BookDaoImpl implements BookDao {
             "status_id = (SELECT id FROM status WHERE status_name = ?), price = ?, isbn = ? where Id = ?;";
     public static final String COUNT_BOOKS = "SELECT count(*) AS total FROM books";
 
-    private final DataSource dataSource;
+    private final DataSourcePostgres dataSourcePostgres;
 
-    public BookDaoImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public BookDaoImpl(DataSourcePostgres dataSourcePostgres) {
+        this.dataSourcePostgres = dataSourcePostgres;
     }
 
     @Override
     public List<Book> getAll() {
         List<Book> books = new ArrayList<>();
         try {
-            Connection connection = dataSource.getConnection();
+            Connection connection = dataSourcePostgres.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(GET_ALL);
             while (resultSet.next()) {
@@ -50,7 +50,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Book getById(Long id) {
-        Connection connection = dataSource.getConnection();
+        Connection connection = dataSourcePostgres.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(GET_BY_ID);) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -65,7 +65,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Book getBookByISBN(String isbn) {
-        Connection connection = dataSource.getConnection();
+        Connection connection = dataSourcePostgres.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(GET_BY_ISBN);) {
             statement.setString(1, isbn);
             ResultSet resultSet = statement.executeQuery();
@@ -80,7 +80,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> getBooksByAuthor(String author) {
-        Connection connection = dataSource.getConnection();
+        Connection connection = dataSourcePostgres.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(GET_BY_AUTHOR);) {
             List<Book> books = new ArrayList<>();
             statement.setString(1, author);
@@ -97,7 +97,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Book create(Book book) {
-        Connection connection = dataSource.getConnection();
+        Connection connection = dataSourcePostgres.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(ADD_BOOK, Statement.RETURN_GENERATED_KEYS)) {
             extractedBook(book, statement);
             if (statement.executeUpdate() == 1) {
@@ -115,7 +115,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book update(Book book) {
         try {
-            Connection connection = dataSource.getConnection();
+            Connection connection = dataSourcePostgres.getConnection();
             PreparedStatement statement = connection.prepareStatement(UPDATE_BY_ID);
             extractedBook(book, statement);
             statement.setLong(7, book.getId());
@@ -131,7 +131,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public boolean delete(Long id) {
         try {
-            Connection connection = dataSource.getConnection();
+            Connection connection = dataSourcePostgres.getConnection();
             PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID);
             statement.setLong(1, id);
             if (statement.executeUpdate() == 1) {
@@ -147,7 +147,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Long countAllBooks() {
         try {
-            Connection connection = dataSource.getConnection();
+            Connection connection = dataSourcePostgres.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(COUNT_BOOKS);
             if (resultSet.next()) {

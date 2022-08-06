@@ -9,15 +9,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DataSource implements Closeable {
+public class DataSourceElephant implements Closeable {
     private Connection connection;
 
     public Connection getConnection() {
         if (connection == null) {
             try {
                 Properties conf = PropetiesLoader.loadProperties();
-                connection = DriverManager.getConnection(conf.getProperty("URL"),
-                        conf.getProperty("USER"), conf.getProperty("PASSWORD"));
+                connection = DriverManager.getConnection(conf.getProperty("URL_E"),
+                        conf.getProperty("USER_E"), conf.getProperty("PASSWORD_E"));
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
             }

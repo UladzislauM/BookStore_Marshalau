@@ -14,27 +14,62 @@ public class UserService {
 
     public List<User> getAllUsers() {
         System.out.println("Start method Service.getAllUsers");
-        return userDao.getAll();
+        List<User> users = userDao.getAll();
+        if(users == null) {
+            throw new RuntimeException("There are no users in the table");
+        }
+        return users;
     }
 
     public User getUserById(Long id) {
         System.out.println("Start method Service.getUserById");
-        return userDao.getById(id);
+        User user = userDao.getById(id);
+        if(user == null){
+            throw new RuntimeException("User not found.");
+        }
+        return user;
     }
 
-    public boolean deleteUserById(Long id) {
+    public User getUserByEmail(String email) {
+        System.out.println("Start method Service.getUserByEmail");
+        User user = userDao.getByEmail(email);
+        if(user == null){
+            throw new RuntimeException("Email not found.");
+        }
+        return user;
+    }
+    public List<User> getUsersByLastName(String lastName) {
+        System.out.println("Start method Service.getUserByEmail");
+        List<User> users = userDao.getUserByLastName(lastName);
+        if(users == null){
+            throw new RuntimeException("Last Name not found.");
+        }
+        return users;
+    }
+
+    public void deleteUserById(Long id) {
         System.out.println("Start method Service.deleteUserById");
-        return userDao.delete(id);
+        if(!userDao.delete(id)) {
+            throw new RuntimeException("Such a user cannot be deleted");
+        }
     }
 
     public User createUser(User user) {
         System.out.println("Start method Service.createUser");
-        return userDao.create(user);
+        user = userDao.create(user);
+        if (user == null){
+            throw new RuntimeException("Such a user cannot be added");
+        }
+        return user;
     }
 
     public User updateUserById(User user) {
         System.out.println("Start method Service.updateUserById");
-        return userDao.update(user);
+        user = userDao.update(user);
+        if(user == null) {
+            throw new RuntimeException("Such a user cannot be updated");
+        }
+        return user;
     }
 
     public Long countAllUsers() {

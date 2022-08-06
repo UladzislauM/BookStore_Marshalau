@@ -1,18 +1,58 @@
-CREATE TYPE role_user as ENUM ('ADMIN', 'MANAGER');
-
 CREATE TABLE users(
  id                  BIGSERIAL PRIMARY KEY NOT NULL,
  name               CHARACTER VARYING (100) NOT NULL,
  last_name          CHARACTER VARYING (100) NOT NULL,
  email              CHARACTER VARYING (100) NOT NULL,
  password           CHARACTER VARYING (50) NOT null,
- role               role_user
 );
 
+INSERT INTO users(name, last_name, email, password) 
+VALUES ('Yauheni', 'Hlaholeu', 'jek94@gmail.com', '12qwaszx'),
+('Uladzislau', 'Solovev', 'sol44@yandex.by', 'qazxsw21'),
+('Haliana', 'Sidoric', 'galina_sid@gmail.com', 'sid93LL'),
+('Lana', 'Dimidova', 'dlana@mail.ru', 'vfAz1234'),
+('Andrey', 'Aksenov', 'AKsin@Gmail.com','12345678OOp'),
+('Nazar', 'Vahtongov', 'vagan@mail.ru', '333eeeddfd'),
+('Tatyana', 'Minikova', 'tMin@tut.by', 'trewrg'),
+('Michail', 'Marshalau', 'Mix2020@rambler.by', 'hgnboenoenernv'),
+('Francs', 'Nikiforof', 'rdko@mail.ru', 'roinrv'),
+('Adi', 'Huseinov', 'gitler21@gmail.com', 'tirmid'),
+('Kristafor', 'Djigurda', 'Americo1789@mail.ru', '534rrr'),
+('Haliana', 'Dombrouskaya', 'hali-gali@yahoo.com', 'ddffgg445566'),
+('Katserina', 'Mudalovich', 'gali@moli.ru', 'irjfncv'),
+('Yauheni', 'Jimolost', 'tolick@rambler.ru', 'fkfldmc.');
 
-INSERT INTO users (name, last_name, email, password, role) 
-VALUES ('Yauheni', 'Hlaholeu', 'jek94@gmail.com', '12qwaszx', 'ADMIN'),
-('Uladzislau', 'Solovev', 'sol44@yandex.by', 'qazxsw21', 'MANAGER'),
-('Haliana', 'Sidoric', 'galina_sid@gmail.com', 'sid93LL', 'MANAGER'),
-('Lana', 'Dimidova', 'dlana@mail.ru', 'vfAz1234', 'MANAGER'),
-('Andrey', 'Aksenov', 'AKsin@Gmail.com','12345678OOp', 'MANAGER');
+CREATE TABLE role(
+id                  BIGSERIAL PRIMARY KEY NOT NULL,
+role_name           CHARACTER VARYING (60)
+);
+
+INSERT INTO role(role_name)
+VALUES ('ADMIN'),
+('USER'),
+('MANAGER');
+
+ALTER TABLE users  
+ADD role_id BIGINT  
+REFERENCES role(id);
+
+UPDATE users  
+SET role_id = (SELECT Id FROM role WHERE role_name = 'USER') 
+WHERE Id>5;
+
+UPDATE users  
+SET role_id = (SELECT Id FROM role WHERE role_name = 'MANAGER') 
+WHERE id BETWEEN 2 AND 5;
+
+UPDATE users  
+SET role_id = (SELECT Id FROM role WHERE role_name = 'ADMIN') 
+WHERE Id=1;
+
+SELECT users.id,name, last_name, email, PASSWORD, role.role_name
+FROM users  JOIN role 
+ON users.role_id = role.id;
+
+INSERT INTO users (name, last_name, email, password, role_id) 
+VALUES ('Vlad', 'Marshalau', 'rigfd2020@rambler.by', 'srdfhgjthr', (SELECT id FROM role WHERE role_name = 'ADMIN'));
+
+
