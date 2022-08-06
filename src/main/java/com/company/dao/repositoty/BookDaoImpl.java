@@ -10,19 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookDaoImpl implements BookDao {
-    public static final String GET_ALL = "SELECT id, title, name_author, date_release_book, status, price, isbn" +
-            " FROM books";
-    public static final String GET_BY_ID = "SELECT id, title, name_author, date_release_book, status, price, isbn" +
-            " FROM books WHERE id = ?";
-    public static final String GET_BY_ISBN = "SELECT id, title, name_author, date_release_book, status, price, isbn" +
-            " FROM books WHERE isbn = ?";
-    public static final String GET_BY_AUTHOR = "SELECT id, title, name_author, date_release_book, status, price, isbn" +
-            " FROM books WHERE name_author = ?";
+    public static final String GET_ALL = "SELECT books.id, books.title, books.name_author, books.date_release_book, books.price," +
+            " books.isbn, status.status_name FROM books JOIN status ON books.status_id = status.Id;";
+    public static final String GET_BY_ID = "SELECT books.id, books.title, books.name_author, books.date_release_book, books.price, " +
+            "books.isbn, status.status_name FROM books JOIN status ON books.status_id = status.Id WHERE books.id = ?";
+    public static final String GET_BY_ISBN = "SELECT books.id, books.title, books.name_author, books.date_release_book, books.price, " +
+            "books.isbn, status.status_name FROM books JOIN status ON books.status_id = status.Id WHERE books.isbn = ?";
+    public static final String GET_BY_AUTHOR = "SELECT books.id, books.title, books.name_author, books.date_release_book, books.price, " +
+            "books.isbn, status.status_name FROM books JOIN status ON books.status_id = status.Id WHERE books.name_author = ?";
     public static final String DELETE_BY_ID = "DELETE FROM books WHERE id = ?";
     public static final String ADD_BOOK = "INSERT INTO books (title, name_author, date_release_book," +
-            " status, price, isbn) VALUES (?, ?, ?, ?, ?, ?)";
+            " status_id, price, isbn) VALUES (?, ?, ?, (SELECT id FROM status WHERE status_name = ?), ?, ?)";
     public static final String UPDATE_BY_ID = "UPDATE books SET title = ?, name_author = ?, date_release_book = ?," +
-            "status = ?, price = ?, isbn = ? where Id = ?;";
+            "status_id = (SELECT id FROM status WHERE status_name = ?), price = ?, isbn = ? where Id = ?;";
     public static final String COUNT_BOOKS = "SELECT count(*) AS total FROM books";
 
     private final DataSource dataSource;
@@ -165,7 +165,7 @@ public class BookDaoImpl implements BookDao {
         book.setTitle(resultSet.getString("title"));
         book.setNameAuthor(resultSet.getString("name_author"));
         book.setDateReleaseBook(resultSet.getTimestamp("date_release_book").toLocalDateTime().toLocalDate());
-        book.setStatus(StatusBook.valueOf(resultSet.getString("status")));
+        book.setStatus(StatusBook.valueOf(resultSet.getString("status_name")));
         book.setPrice(resultSet.getBigDecimal("price"));
         book.setIsbn(resultSet.getString("isbn"));
         return book;

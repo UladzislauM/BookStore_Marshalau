@@ -9,7 +9,7 @@ public class PropetiesLoader {
     public static Properties loadProperties() throws IOException {
         try {
             Properties configuration = new Properties();
-            configuration.load(App.class.getClassLoader().getResourceAsStream("com/company/dao/resources/application.properties"));
+            configuration.load(App.class.getClassLoader().getResourceAsStream("application.properties"));
             return configuration;
         } catch (Exception e) {
             e.printStackTrace();
