@@ -20,7 +20,13 @@ VALUES ('Yauheni', 'Hlaholeu', 'jek94@gmail.com', '12qwaszx'),
 ('Kristafor', 'Djigurda', 'Americo1789@mail.ru', '534rrr'),
 ('Haliana', 'Dombrouskaya', 'hali-gali@yahoo.com', 'ddffgg445566'),
 ('Katserina', 'Mudalovich', 'gali@moli.ru', 'irjfncv'),
-('Yauheni', 'Jimolost', 'tolick@rambler.ru', 'fkfldmc.');
+('Yauheni', 'Jimolost', 'tolick@rambler.ru', 'fkfldmc.'),
+('Marck', 'Shagal', 'Markusik@rambler.ru', 'wertyuhgf'),
+('Ivan', 'Mandelshtamm', 'manid@Gmail.com', '324rewf'),
+('IoganSebostian', 'Bah', 'bahbah-12@mail.ru', '45tfe'),
+('Pavel', 'Krishtofsky', 'pashok98@mail.ru', 'rtyjgf'),
+('Artemiy', 'Potrahunchik', 'temavsem424@Gmail.com', '4567876543'),
+('Vlad', 'Topalov', 'topal34@mail.ru', '345ygf');
 
 CREATE TABLE role(
 id                  BIGSERIAL PRIMARY KEY NOT NULL,
@@ -38,15 +44,15 @@ REFERENCES role(id);
 
 UPDATE users  
 SET role_id = (SELECT Id FROM role WHERE role_name = 'USER') 
-WHERE Id>5;
+WHERE Id>8;
 
 UPDATE users  
 SET role_id = (SELECT Id FROM role WHERE role_name = 'MANAGER') 
-WHERE id BETWEEN 2 AND 5;
+WHERE id BETWEEN 3 AND 7;
 
 UPDATE users  
 SET role_id = (SELECT Id FROM role WHERE role_name = 'ADMIN') 
-WHERE Id=1;
+WHERE id BETWEEN 1 and 2;
 
 SELECT users.id,name, last_name, email, PASSWORD, role.role_name
 FROM users  JOIN role 
