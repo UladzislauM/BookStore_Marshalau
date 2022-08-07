@@ -2,6 +2,9 @@ package com.company.dao.service;
 
 import com.company.dao.entity.User;
 import com.company.dao.module.UserDao;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -13,68 +16,77 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
-        System.out.println("Start method Service.getAllUsers");
+        logger.log(Level.DEBUG, "Start UserService - getAllUsers");
         List<User> users = userDao.getAll();
-        if(users == null) {
+        if (users == null) {
+            logger.log(Level.ERROR, "There are no users in the table");
             throw new RuntimeException("There are no users in the table");
         }
         return users;
     }
 
     public User getUserById(Long id) {
-        System.out.println("Start method Service.getUserById");
+        logger.log(Level.DEBUG, "Start UserService - getUserById");
         User user = userDao.getById(id);
-        if(user == null){
+        if (user == null) {
+            logger.log(Level.ERROR, "User not found.");
             throw new RuntimeException("User not found.");
         }
         return user;
     }
 
     public User getUserByEmail(String email) {
-        System.out.println("Start method Service.getUserByEmail");
+        logger.log(Level.DEBUG, "Start UserService - getUserByEmail");
         User user = userDao.getByEmail(email);
-        if(user == null){
+        if (user == null) {
+            logger.log(Level.ERROR, "Email not found.");
             throw new RuntimeException("Email not found.");
         }
         return user;
     }
+
     public List<User> getUsersByLastName(String lastName) {
-        System.out.println("Start method Service.getUserByEmail");
+        logger.log(Level.DEBUG, "Start UserService - getUsersByLastName");
         List<User> users = userDao.getUserByLastName(lastName);
-        if(users == null){
+        if (users == null) {
+            logger.log(Level.ERROR, "Last Name not found.");
             throw new RuntimeException("Last Name not found.");
         }
         return users;
     }
 
     public void deleteUserById(Long id) {
-        System.out.println("Start method Service.deleteUserById");
-        if(!userDao.delete(id)) {
+        logger.log(Level.DEBUG, "Start UserService - deleteUserById");
+        if (!userDao.delete(id)) {
+            logger.log(Level.ERROR, "Such a user cannot be deleted");
             throw new RuntimeException("Such a user cannot be deleted");
         }
     }
 
     public User createUser(User user) {
-        System.out.println("Start method Service.createUser");
+        logger.log(Level.DEBUG, "Start UserService - createUser");
         user = userDao.create(user);
-        if (user == null){
+        if (user == null) {
+            logger.log(Level.ERROR, "Such a user cannot be added");
             throw new RuntimeException("Such a user cannot be added");
         }
         return user;
     }
 
     public User updateUserById(User user) {
-        System.out.println("Start method Service.updateUserById");
+        logger.log(Level.DEBUG, "Start UserService - updateUserById");
         user = userDao.update(user);
-        if(user == null) {
+        if (user == null) {
+            logger.log(Level.ERROR, "Such a user cannot be updated");
             throw new RuntimeException("Such a user cannot be updated");
         }
         return user;
     }
 
     public Long countAllUsers() {
-        System.out.println("Start method Service.countAllUsers");
+        logger.log(Level.DEBUG, "Start UserService - countAllUsers");
         return userDao.countAllUsers();
     }
 
+    static Logger logger = LogManager.getLogger();
 }

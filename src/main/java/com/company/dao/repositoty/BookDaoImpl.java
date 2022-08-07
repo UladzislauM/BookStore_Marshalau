@@ -4,6 +4,9 @@ import com.company.dao.entity.Book;
 import com.company.dao.entity.StatusBook;
 import com.company.dao.module.BookDao;
 import com.company.dao.util.DataSourcePostgres;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -34,16 +37,17 @@ public class BookDaoImpl implements BookDao {
     @Override
     public List<Book> getAll() {
         List<Book> books = new ArrayList<>();
-        try {
-            Connection connection = dataSourcePostgres.getConnection();
-            Statement statement = connection.createStatement();
+        Connection connection = dataSourcePostgres.getConnection();
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(GET_ALL);
+            logger.log(Level.DEBUG, "The method is being executed - getAll Books");
             while (resultSet.next()) {
                 Book book = process(resultSet);
                 books.add(book);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, "Method error - getAll Books");
+            throw new RuntimeException("Method error - getAll Books");
         }
         return books;
     }
@@ -54,11 +58,13 @@ public class BookDaoImpl implements BookDao {
         try (PreparedStatement statement = connection.prepareStatement(GET_BY_ID);) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
+            logger.log(Level.DEBUG, "The method is being executed - getById");
             if (resultSet.next()) {
                 return process(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, "Method error - getById Books");
+            throw new RuntimeException("Method error - getById Books");
         }
         return null;
     }
@@ -69,11 +75,13 @@ public class BookDaoImpl implements BookDao {
         try (PreparedStatement statement = connection.prepareStatement(GET_BY_ISBN);) {
             statement.setString(1, isbn);
             ResultSet resultSet = statement.executeQuery();
+            logger.log(Level.DEBUG, "The method is being executed - getBookByISBN");
             if (resultSet.next()) {
                 return process(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, "Method error - getBookByISBN");
+            throw new RuntimeException("Method error - getBookByISBN");
         }
         return null;
     }
@@ -85,12 +93,14 @@ public class BookDaoImpl implements BookDao {
             List<Book> books = new ArrayList<>();
             statement.setString(1, author);
             ResultSet resultSet = statement.executeQuery();
+            logger.log(Level.DEBUG, "The method is being executed - getBooksByAuthor");
             while (resultSet.next()) {
                 books.add(process(resultSet));
+                return books;
             }
-            return books;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, "Method error - getBooksByAuthor");
+            throw new RuntimeException("Method error - getBooksByAuthor");
         }
         return null;
     }
@@ -100,6 +110,7 @@ public class BookDaoImpl implements BookDao {
         Connection connection = dataSourcePostgres.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(ADD_BOOK, Statement.RETURN_GENERATED_KEYS)) {
             extractedBook(book, statement);
+            logger.log(Level.DEBUG, "The method is being executed - create book");
             if (statement.executeUpdate() == 1) {
                 ResultSet resultSet = statement.getGeneratedKeys();
                 if (resultSet.next()) {
@@ -107,38 +118,42 @@ public class BookDaoImpl implements BookDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, "Method error - create book");
+            throw new RuntimeException("Method error - create book");
         }
         return null;
     }
 
     @Override
     public Book update(Book book) {
-        try {
-            Connection connection = dataSourcePostgres.getConnection();
-            PreparedStatement statement = connection.prepareStatement(UPDATE_BY_ID);
+
+        Connection connection = dataSourcePostgres.getConnection();
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE_BY_ID)) {
             extractedBook(book, statement);
             statement.setLong(7, book.getId());
+            logger.log(Level.DEBUG, "The method is being executed - update book");
             if (statement.executeUpdate() == 1) {
                 return getById(book.getId());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, "Method error - update book");
+            throw new RuntimeException("Method error - update book");
         }
         return null;
     }
 
     @Override
     public boolean delete(Long id) {
-        try {
-            Connection connection = dataSourcePostgres.getConnection();
-            PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID);
+        Connection connection = dataSourcePostgres.getConnection();
+        try (PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID)) {
             statement.setLong(1, id);
+            logger.log(Level.DEBUG, "The method is being executed - delete book");
             if (statement.executeUpdate() == 1) {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, "Method error - delete book");
+            throw new RuntimeException("Method error - delete book");
         }
         return false;
     }
@@ -146,15 +161,16 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Long countAllBooks() {
-        try {
-            Connection connection = dataSourcePostgres.getConnection();
-            Statement statement = connection.createStatement();
+        Connection connection = dataSourcePostgres.getConnection();
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(COUNT_BOOKS);
+            logger.log(Level.DEBUG, "The method is being executed - countAllBooks");
             if (resultSet.next()) {
                 return resultSet.getLong("total");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, "Method error - countAllBooks");
+            throw new RuntimeException("Method error - countAllBooks");
         }
         throw new RuntimeException("Exception - Null");
     }
@@ -179,4 +195,6 @@ public class BookDaoImpl implements BookDao {
         statement.setBigDecimal(5, book.getPrice());
         statement.setString(6, book.getIsbn());
     }
+
+    static Logger logger = LogManager.getLogger();
 }

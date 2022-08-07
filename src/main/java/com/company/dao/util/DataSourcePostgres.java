@@ -1,6 +1,9 @@
 package com.company.dao.util;
 
-import com.company.dao.resources.PropetiesLoader;
+import com.company.dao.resources.PropertiesLoader;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -15,11 +18,13 @@ public class DataSourcePostgres implements Closeable {
     public Connection getConnection() {
         if (connection == null) {
             try {
-                Properties conf = PropetiesLoader.loadProperties();
+                Properties conf = PropertiesLoader.loadProperties();
                 connection = DriverManager.getConnection(conf.getProperty("URL"),
                         conf.getProperty("USER"), conf.getProperty("PASSWORD"));
-            } catch (SQLException | IOException e) {
-                e.printStackTrace();
+                logger.log(Level.INFO, "Create connection to PostgreSQL localhost");
+            } catch (SQLException e) {
+                logger.log(Level.ERROR, "Connection ERROR (localhost)");
+                throw new RuntimeException(e);
             }
         }
         return connection;
@@ -31,8 +36,11 @@ public class DataSourcePostgres implements Closeable {
             try {
                 connection.close();
             } catch (SQLException e) {
+                logger.log(Level.ERROR, "Connection ERROR (localhost)");
                 throw new RuntimeException(e);
             }
         }
     }
+
+    static Logger logger = LogManager.getLogger();
 }
