@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.Closeable;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,6 +13,7 @@ import java.util.Properties;
 
 public class DataSourcePostgres implements Closeable {
     private Connection connection;
+    private static final Logger log = LogManager.getLogger(DataSourcePostgres.class);
 
     public Connection getConnection() {
         if (connection == null) {
@@ -21,9 +21,9 @@ public class DataSourcePostgres implements Closeable {
                 Properties conf = PropertiesLoader.loadProperties();
                 connection = DriverManager.getConnection(conf.getProperty("URL"),
                         conf.getProperty("USER"), conf.getProperty("PASSWORD"));
-                logger.log(Level.INFO, "Create connection to PostgreSQL localhost");
+                log.info("Create connection in to PostgreSQL localhost");
             } catch (SQLException e) {
-                logger.log(Level.ERROR, "Connection ERROR (localhost)");
+                log.error("Connection ERROR (localhost) - {}", e);
                 throw new RuntimeException(e);
             }
         }
@@ -36,11 +36,9 @@ public class DataSourcePostgres implements Closeable {
             try {
                 connection.close();
             } catch (SQLException e) {
-                logger.log(Level.ERROR, "Connection ERROR (localhost)");
+                log.error("Connection ERROR (localhost) - {}", e);
                 throw new RuntimeException(e);
             }
         }
     }
-
-    static Logger logger = LogManager.getLogger();
 }

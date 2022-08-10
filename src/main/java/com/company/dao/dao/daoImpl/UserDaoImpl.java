@@ -1,8 +1,8 @@
-package com.company.dao.repositoty;
+package com.company.dao.dao.daoImpl;
 
+import com.company.dao.dao.UserDao;
 import com.company.dao.entity.RoleUser;
 import com.company.dao.entity.User;
-import com.company.dao.module.UserDao;
 import com.company.dao.util.DataSourceElephant;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -29,6 +29,8 @@ public class UserDaoImpl implements UserDao {
     public static final String COUNT_USERS = "SELECT count(*) AS total FROM users";
 
     private final DataSourceElephant dataSourceElephant;
+    private static final Logger log = LogManager.getLogger(BookDaoImpl.class);
+
 
     public UserDaoImpl(DataSourceElephant dataSourceElephant) {
         this.dataSourceElephant = dataSourceElephant;
@@ -40,14 +42,14 @@ public class UserDaoImpl implements UserDao {
         Connection connection = dataSourceElephant.getConnection();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(GET_ALL);
-            logger.log(Level.DEBUG, "The method is being executed - getAll users");
+            log.debug("The method is being executed - getAll: {}", users.size());
             while (resultSet.next()) {
                 User user = process(resultSet);
                 users.add(user);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Method error - getAll users");
-            throw new RuntimeException("Method error - getAll users");
+            log.error("Method error - getAll: {}", e);
+            throw new RuntimeException("Method error - getAll users: {}", e);
         }
         return users;
     }
@@ -59,14 +61,14 @@ public class UserDaoImpl implements UserDao {
         try (PreparedStatement statement = connection.prepareStatement(GET_BY_LAST_NAME, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, lastName);
             ResultSet resultSet = statement.executeQuery();
-            logger.log(Level.DEBUG, "The method is being executed - getUserByLastName");
+            log.debug("The method is being executed - getUserByLastName: {}", lastName);
             while (resultSet.next()) {
                 users.add(getById(resultSet.getLong(1)));
                 return users;
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Method error - getUserByLastName");
-            throw new RuntimeException("Method error - getUserByLastName");
+            log.error("Method error - getUserByLastName: {}", e);
+            throw new RuntimeException("Method error - getUserByLastName: {}", e);
         }
         return null;
     }
@@ -76,17 +78,17 @@ public class UserDaoImpl implements UserDao {
         return getUserBySomeParams(GET_BY_ID, ps -> {
             try {
                 ps.setLong(1, id);
-                logger.log(Level.DEBUG, "The method is being executed - getById user");
+                log.debug("The method is being executed - getById: {}", id);
             } catch (SQLException e) {
-                logger.log(Level.ERROR, "Method error - getById user");
-                throw new RuntimeException("Method error - getById user");
+                log.error("Method error - getById: {}", e);
+                throw new RuntimeException("Method error - getById: {}", e);
             }
         });
     }
 
     @Override
     public User getByEmail(String email) {
-        logger.log(Level.DEBUG, "The method is being executed - getByEmail user");
+        log.debug("The method is being executed - getByEmail: {}", email);
         return getUserBySomeParams(GET_BY_EMAIL, ps -> ps.setString(1, email));
     }
 
@@ -95,7 +97,7 @@ public class UserDaoImpl implements UserDao {
         Connection connection = dataSourceElephant.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(ADD_USER, Statement.RETURN_GENERATED_KEYS)) {
             extractedBook(user, statement);
-            logger.log(Level.DEBUG, "The method is being executed - create user");
+            log.debug("The method is being executed - create user: {}", user);
             if (statement.executeUpdate() == 1) {
                 ResultSet resultSet = statement.getGeneratedKeys();
                 if (resultSet.next()) {
@@ -103,8 +105,8 @@ public class UserDaoImpl implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Method error - create user");
-            throw new RuntimeException("Method error - create user");
+            log.error("Method error - create user: {}", e);
+            throw new RuntimeException("Method error - create user: {}", e);
         }
         return null;
     }
@@ -115,13 +117,13 @@ public class UserDaoImpl implements UserDao {
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_BY_ID)) {
             extractedBook(user, statement);
             statement.setLong(6, user.getId());
-            logger.log(Level.DEBUG, "The method is being executed - update user");
+            log.debug("The method is being executed - update user: {}", user);
             if (statement.executeUpdate() == 1) {
                 return getById(user.getId());
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Method error - update user");
-            throw new RuntimeException("Method error - update user");
+            log.error("Method error - update user: {}", e);
+            throw new RuntimeException("Method error - update user: {}", e);
         }
         return null;
     }
@@ -131,13 +133,13 @@ public class UserDaoImpl implements UserDao {
         Connection connection = dataSourceElephant.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID)) {
             statement.setLong(1, id);
-            logger.log(Level.DEBUG, "The method is being executed - delete user");
+            log.debug("The method is being executed - delete user: {}", id);
             if (statement.executeUpdate() == 1) {
                 return true;
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Method error - update user");
-            throw new RuntimeException("Method error - update user");
+            log.error("Method error - delete user: {}", e);
+            throw new RuntimeException("Method error - delete user: {}", e);
         }
         return false;
     }
@@ -148,15 +150,14 @@ public class UserDaoImpl implements UserDao {
         Connection connection = dataSourceElephant.getConnection();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(COUNT_USERS);
-            logger.log(Level.DEBUG, "The method is being executed - countAllUsers user");
+            log.debug("The method is being executed - countAllUsers");
             if (resultSet.next()) {
                 return resultSet.getLong("total");
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Method error - update user");
-            throw new RuntimeException("Method error - update user");
+            log.error("Method error - countAllUsers: {}", e);
         }
-        throw new RuntimeException("Exception - Null countAllUsers");
+        throw new RuntimeException("Method error - countAllUsers");
     }
 
     private User process(ResultSet resultSet) throws SQLException {
@@ -187,16 +188,14 @@ public class UserDaoImpl implements UserDao {
         try (PreparedStatement statement = connection.prepareStatement(sql);) {
             preparator.prepare(statement);
             ResultSet resultSet = statement.executeQuery();
-            logger.log(Level.DEBUG, "The method is being executed - getUserBySomeParams");
+            log.debug("The method is being executed - getUserBySomeParams");
             if (resultSet.next()) {
                 return process(resultSet);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Method error - getUserBySomeParams");
-            throw new RuntimeException("Method error - getUserBySomeParams");
+            log.error("Method error - getUserBySomeParams: {}", e);
+            throw new RuntimeException("Method error - getAll users: {}", e);
         }
-        return null;
+        return new User();
     }
-
-    static Logger logger = LogManager.getLogger();
 }

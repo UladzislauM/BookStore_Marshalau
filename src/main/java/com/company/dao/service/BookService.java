@@ -1,8 +1,7 @@
 package com.company.dao.service;
 
 import com.company.dao.entity.Book;
-import com.company.dao.entity.User;
-import com.company.dao.module.BookDao;
+import com.company.dao.dao.BookDao;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,97 +11,69 @@ import java.util.List;
 
 public class BookService {
     private final BookDao bookDao;
+    private static final Logger log = LogManager.getLogger(BookService.class);
 
     public BookService(BookDao bookDao) {
         this.bookDao = bookDao;
     }
 
     public List<Book> getAllBooks() {
-        logger.log(Level.DEBUG, "Start BookService - getAllBooks");
         List<Book> books = bookDao.getAll();
-        if (books == null) {
-            logger.log(Level.ERROR, "There are no books in the table");
-            throw new RuntimeException("There are no books in the table");
-        }
+        log.debug("Start BookService - getAllBooks - {}", books.size());
         return books;
     }
 
     public Book getBookById(Long id) {
-        logger.log(Level.DEBUG, "Start BookService - getBookById");
-        Book book = bookDao.getById(id);
-        if (book == null) {
-            logger.log(Level.ERROR, "Book not found.");
-            throw new RuntimeException("Book not found.");
-        }
-        return book;
+        log.debug("Start BookService - getBookById {}", id);
+        return bookDao.getById(id);
     }
 
-    public void deleteBookById(Long id) {
-        logger.log(Level.DEBUG, "Start BookService - deleteBookById");
-        if (!bookDao.delete(id)) {
-            logger.log(Level.ERROR, "Such a user cannot be deleted");
-            throw new RuntimeException("Such a user cannot be deleted");
-        }
+    public boolean deleteBookById(Long id) {
+        boolean checkBook = bookDao.delete(id);
+        log.debug("Start BookService - deleteBookById {} - {}", id, checkBook);
+        return checkBook;
     }
 
     public Book createBook(Book book) {
-        logger.log(Level.DEBUG, "Start BookService - createBook");
-        book = bookDao.create(book);
-        if (book == null) {
-            logger.log(Level.ERROR, "Such a user cannot be added");
-            throw new RuntimeException("Such a book cannot be added");
-        }
-        return book;
+        log.debug("Start BookService - createBook {}", book);
+        return bookDao.create(book);
     }
 
     public Book updateBookById(Book book) {
-        logger.log(Level.DEBUG, "Start BookService - updateBookById");
-        book = bookDao.update(book);
-        if (book == null) {
-            logger.log(Level.ERROR, "Such a user cannot be updated");
-            throw new RuntimeException("Such a book cannot be updated");
-        }
-        return book;
+        log.debug("Start BookService - updateBookById {}", book);
+        return bookDao.update(book);
     }
 
     public Book getBookByISBN(String isbn) {
-        logger.log(Level.DEBUG, "Start BookService - getBookByISBN");
-        Book book = bookDao.getBookByISBN(isbn);
-        if (book == null) {
-            logger.log(Level.ERROR, "Book not found.");
-            throw new RuntimeException("Book not found.");
-        }
-        return book;
+        log.debug("Start BookService - getBookByISBN {}", isbn);
+        return bookDao.getBookByISBN(isbn);
     }
 
     public List<Book> getBookByAuthor(String author) {
-        logger.log(Level.DEBUG, "Start BookService - getBookByAuthor");
+        log.debug("Start BookService - getBookByISBN {}", author);
         List<Book> books = bookDao.getBooksByAuthor(author);
-        if (books == null) {
-            logger.log(Level.ERROR, "Book not found.");
-            throw new RuntimeException("Book not found.");
-        }
         return books;
     }
 
     public Long countAllBooks() {
-        logger.log(Level.DEBUG, "Start BookService - countAllBooks");
+        log.debug("Start BookService - countAllBooks");
         return bookDao.countAllBooks();
     }
 
     public BigDecimal sumBooksByAuthor(String author) {
-        logger.log(Level.DEBUG, "Start BookService - sumBooksByAuthor");
+        log.debug("Start BookService - sumBooksByAuthor {}", author);
         List<Book> books = bookDao.getBooksByAuthor(author);
-        if (books.size() != 0) {
-            BigDecimal sum = books.get(0).getPrice();
-            for (int i = 1; i < books.size(); i++) {
-                sum = sum.add(books.get(i).getPrice());
+        try {
+            if (books.size() != 0) {
+                BigDecimal sum = books.get(0).getPrice();
+                for (int i = 1; i < books.size(); i++) {
+                    sum = sum.add(books.get(i).getPrice());
+                }
+                return sum;
             }
-            return sum;
+        } catch (Exception e) {
+            log.error("Method error - sumBooksByAuthor: {}", e);
         }
-        logger.log(Level.ERROR, "Book not found.");
-        throw new RuntimeException("Books not found");
+        throw new RuntimeException("Method error - sumBooksByAuthor");
     }
-
-    static Logger logger = LogManager.getLogger();
 }

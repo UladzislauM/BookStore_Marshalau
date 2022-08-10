@@ -2,8 +2,9 @@ package com.company.dao.controller;
 
 import com.company.dao.entity.Book;
 import com.company.dao.entity.StatusBook;
-import com.company.dao.repositoty.BookDaoImpl;
+import com.company.dao.dao.daoImpl.BookDaoImpl;
 import com.company.dao.service.BookService;
+import com.company.dao.util.DataSourceElephant;
 import com.company.dao.util.DataSourcePostgres;
 
 import java.time.LocalDate;
@@ -13,8 +14,8 @@ import java.util.Scanner;
 
 public class ControllerBook {
     public void consoleInterface(Scanner in) {
-        try (DataSourcePostgres dataSourcePostgres = new DataSourcePostgres()) {
-            BookService bookService = new BookService(new BookDaoImpl(dataSourcePostgres));
+        try (DataSourceElephant dataSourceElephant = new DataSourceElephant()) {
+            BookService bookService = new BookService(new BookDaoImpl(dataSourceElephant));
 
             System.out.println("""
                      Commands:
@@ -58,8 +59,8 @@ public class ControllerBook {
                         System.out.println("Book Updated : ".concat(bookService.updateBookById(addBookKeyBoard(in)).toString()));
                         break;
                     case "delete":
-                        bookService.deleteBookById(Long.parseLong(commandConsoleArr[1]));
-                        System.out.println("Book Deleted : ".concat(commandConsoleArr[1]));
+                        System.out.printf("Book Deleted: %s" +
+                                ", %s", commandConsoleArr[1], bookService.deleteBookById(Long.parseLong(commandConsoleArr[1])));
                         break;
                     case "getisbn":
                         System.out.println("Book by isbn ".concat(commandConsoleArr[1]).concat(" : ")

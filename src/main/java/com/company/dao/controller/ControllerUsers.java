@@ -2,10 +2,9 @@ package com.company.dao.controller;
 
 import com.company.dao.entity.RoleUser;
 import com.company.dao.entity.User;
-import com.company.dao.repositoty.UserDaoImpl;
+import com.company.dao.dao.daoImpl.UserDaoImpl;
 import com.company.dao.service.UserService;
 import com.company.dao.util.DataSourceElephant;
-import com.company.dao.util.DataSourcePostgres;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,8 +56,7 @@ public class ControllerUsers {
                         System.out.println("User Updated : " + userService.updateUserById(addUserKeyBoard(in)));
                         break;
                     case "delete":
-                        userService.deleteUserById(Long.parseLong(commandConsoleArr[1]));
-                        System.out.println("User Deleted : ".concat(commandConsoleArr[1]));
+                        System.out.printf("User Deleted: %s, %s ", commandConsoleArr[1], userService.deleteUserById(Long.parseLong(commandConsoleArr[1])));
                         break;
                     case "getemail":
                         System.out.println("User by email : ".concat(commandConsoleArr[1]).concat(" : ")

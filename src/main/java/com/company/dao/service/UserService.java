@@ -1,7 +1,7 @@
 package com.company.dao.service;
 
 import com.company.dao.entity.User;
-import com.company.dao.module.UserDao;
+import com.company.dao.dao.UserDao;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,83 +10,52 @@ import java.util.List;
 
 public class UserService {
     private final UserDao userDao;
+    private static final Logger log = LogManager.getLogger(BookService.class);
+
 
     public UserService(UserDao userDao) {
         this.userDao = userDao;
     }
 
     public List<User> getAllUsers() {
-        logger.log(Level.DEBUG, "Start UserService - getAllUsers");
         List<User> users = userDao.getAll();
-        if (users == null) {
-            logger.log(Level.ERROR, "There are no users in the table");
-            throw new RuntimeException("There are no users in the table");
-        }
+        log.debug("Start UserService - getAllUsers: {}", users.size());
         return users;
     }
 
     public User getUserById(Long id) {
-        logger.log(Level.DEBUG, "Start UserService - getUserById");
-        User user = userDao.getById(id);
-        if (user == null) {
-            logger.log(Level.ERROR, "User not found.");
-            throw new RuntimeException("User not found.");
-        }
-        return user;
+        log.debug("Start UserService - getUserById: {}", id);
+        return userDao.getById(id);
     }
 
     public User getUserByEmail(String email) {
-        logger.log(Level.DEBUG, "Start UserService - getUserByEmail");
-        User user = userDao.getByEmail(email);
-        if (user == null) {
-            logger.log(Level.ERROR, "Email not found.");
-            throw new RuntimeException("Email not found.");
-        }
-        return user;
+        log.debug("Start UserService - getUserByEmail: {}", email);
+        return userDao.getByEmail(email);
     }
 
     public List<User> getUsersByLastName(String lastName) {
-        logger.log(Level.DEBUG, "Start UserService - getUsersByLastName");
-        List<User> users = userDao.getUserByLastName(lastName);
-        if (users == null) {
-            logger.log(Level.ERROR, "Last Name not found.");
-            throw new RuntimeException("Last Name not found.");
-        }
-        return users;
+        log.debug("Start UserService - getUsersByLastName: {}", lastName);
+        return userDao.getUserByLastName(lastName);
     }
 
-    public void deleteUserById(Long id) {
-        logger.log(Level.DEBUG, "Start UserService - deleteUserById");
-        if (!userDao.delete(id)) {
-            logger.log(Level.ERROR, "Such a user cannot be deleted");
-            throw new RuntimeException("Such a user cannot be deleted");
-        }
+    public boolean deleteUserById(Long id) {
+        boolean checkUser = userDao.delete(id);
+        log.debug("Start UserService - deleteUserById: {}", id);
+        return checkUser;
     }
 
     public User createUser(User user) {
-        logger.log(Level.DEBUG, "Start UserService - createUser");
-        user = userDao.create(user);
-        if (user == null) {
-            logger.log(Level.ERROR, "Such a user cannot be added");
-            throw new RuntimeException("Such a user cannot be added");
-        }
-        return user;
+        log.debug("Start UserService - createUser: {}", user);
+        return userDao.create(user);
     }
 
     public User updateUserById(User user) {
-        logger.log(Level.DEBUG, "Start UserService - updateUserById");
-        user = userDao.update(user);
-        if (user == null) {
-            logger.log(Level.ERROR, "Such a user cannot be updated");
-            throw new RuntimeException("Such a user cannot be updated");
-        }
-        return user;
+        log.debug("Start UserService - updateUserById: {}", user);
+        return userDao.update(user);
     }
 
     public Long countAllUsers() {
-        logger.log(Level.DEBUG, "Start UserService - countAllUsers");
+        log.debug("Start UserService - countAllUsers");
         return userDao.countAllUsers();
     }
-
-    static Logger logger = LogManager.getLogger();
 }
