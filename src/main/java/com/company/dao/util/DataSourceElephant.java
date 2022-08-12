@@ -19,10 +19,11 @@ public class DataSourceElephant implements Closeable {
         if (connection == null) {
             try {
                 Properties conf = PropertiesLoader.loadProperties();
+                Class.forName("org.postgresql.Driver");
                 connection = DriverManager.getConnection(conf.getProperty("URL_E"),
                         conf.getProperty("USER_E"), conf.getProperty("PASSWORD_E"));
                 log.info("Create connection in to ElephantSQL - {}", connection);
-            } catch (SQLException e) {
+            } catch (ClassNotFoundException | SQLException e) {
                 log.error("Connection ERROR (ElephantSQL) - {}", e);
                 throw new RuntimeException(e);
             }
