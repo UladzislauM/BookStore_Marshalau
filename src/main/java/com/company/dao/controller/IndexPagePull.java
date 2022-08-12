@@ -18,6 +18,7 @@ public class IndexPagePull extends HttpServlet {
         try {
             String commandConsole = req.getParameter("textPull");
             log.debug(commandConsole);
+//            resp.getWriter().println(commandConsole);
             String[] commandConsoleArr = commandConsole.split(" ");
             commandConsole = commandConsoleArr[0].toLowerCase();
             switch (commandConsole) {
