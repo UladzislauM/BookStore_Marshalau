@@ -8,8 +8,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @WebServlet("/index")
-public class indexPageSet extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(indexPageSet.class);
+public class IndexPageSet extends HttpServlet {
+    private static final Logger log = LogManager.getLogger(IndexPageSet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
@@ -23,7 +23,7 @@ public class indexPageSet extends HttpServlet {
                     " <p align=\"center\">write command:</p>" +
                     "  <input type=\"text\" name=\"textPull\" value=\"\" align=\"center\">" +
                     "  <input type=\"submit\" value=\"Submit\" />" +
-                    "</form></body>");
+                    "</form></body></html>");
         } catch (Exception e) {
             log.error("Servlet doGet Exception, index: {}", e);
         }

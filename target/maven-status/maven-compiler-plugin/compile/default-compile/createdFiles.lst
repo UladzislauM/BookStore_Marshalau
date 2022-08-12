@@ -5,13 +5,12 @@ com/company/dao/dao/daoImpl/UserDaoImpl.class
 com/company/dao/controller/GetUserById.class
 com/company/dao/entity/RoleUser.class
 com/company/dao/DTO/StatusBookDTO.class
-com/company/dao/controller/indexPageSet.class
+com/company/dao/controller/IndexPagePull.class
 com/company/dao/controller/GetBookById.class
 com/company/dao/entity/Book.class
 com/company/dao/dao/BookDao.class
 com/company/dao/DTO/BookDTO.class
 com/company/dao/resources/PropertiesLoader.class
-com/company/dao/controller/indexPagePull.class
 com/company/dao/entity/StatusBook.class
 com/company/dao/controller/GetAllUsersHttp.class
 com/company/dao/dao/daoImpl/UserDaoImpl$StatementPreparator.class
@@ -19,6 +18,7 @@ com/company/dao/DTO/RoleUserDTO.class
 com/company/dao/service/UserService.class
 com/company/dao/DTO/UserDTO.class
 com/company/dao/service/BookService.class
+com/company/dao/controller/IndexPageSet.class
 com/company/dao/dao/UserDao.class
 com/company/dao/controller/GetAllBooksHttp.class
 com/company/dao/util/DataSourceElephant.class

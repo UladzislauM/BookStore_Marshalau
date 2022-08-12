@@ -10,26 +10,35 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 @WebServlet("/indexPull")
-public class indexPagePull extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(indexPagePull.class);
+public class IndexPagePull extends HttpServlet {
+    private static final Logger log = LogManager.getLogger(IndexPagePull.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try {
             String commandConsole = req.getParameter("textPull");
-            resp.getWriter().println(commandConsole);
             log.debug(commandConsole);
             String[] commandConsoleArr = commandConsole.split(" ");
             commandConsole = commandConsoleArr[0].toLowerCase();
             switch (commandConsole) {
                 case "users":
-                    resp.sendRedirect("allUsers");
+                    new GetAllUsersHttp().doGet(req, resp);
                     break;
                 case "books":
-                    resp.sendRedirect("allBooks");
+                    new GetAllBooksHttp().doGet(req, resp);
                     break;
                 default:
-                    resp.getWriter().println("This command false. Please try again");
+                    resp.getWriter().println("<!DOCTYPE html>" +
+                            "<html lang=\"en\" dir=\"ltr\">" +
+                            "  <head>" +
+                            "    <meta charset=\"utf-8\">" +
+                            "    <title>BookStore</title>" +
+                            "  </head>" +
+                            "  <body>" +
+                            "    <h4 align=\"center\">This command false. Please try again.</h4>" +
+                            "<hr>" +
+                            "<h2><a href=\"index\">Back</a></h2>" +
+                            "</body></html>");
             }
         } catch (IOException e) {
             log.error("Servlet Pull Exception {}", e);
