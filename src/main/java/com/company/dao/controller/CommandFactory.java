@@ -21,6 +21,8 @@ public class CommandFactory {
         commandMap.put("books", new BooksCommand(bookService));
         commandMap.put("users", new UsersCommand(userService));
         commandMap.put("user", new UserCommand(userService));
+        commandMap.put("error", new Error());
+        commandMap.put("user_create", new UserCreate(userService));
     }
 
     public Command getCommand(String command) {

@@ -20,10 +20,19 @@ public class UserCommand implements Command {
         log.info("Start UserCommand {}", req.getParameter("id"));
         try {
             User user = userService.getUserById(Long.parseLong(req.getParameter("id")));
-            req.setAttribute("user", user);
+            if (user.getId() == null) {
+                req.setAttribute("error", "The user does not exist");
+                log.error("The user does not exist");
+                return "error.jsp";
+            } else {
+                req.setAttribute("user", user);
+                return "user.jsp";
+            }
         } catch (Exception e) {
             log.error("Exception by UserCommand {}", e);
+            req.setAttribute("error", "The user does not exist");
+            log.error("The user does not exist");
+            return "error.jsp";
         }
-        return "user.jsp";
     }
 }

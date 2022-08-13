@@ -8,6 +8,18 @@
 <body>
 <h3>AllUsers (abbreviated representation): </h3>
 <hr>
+<form align="left" action="controller?post_user=user_create" method="post">
+    <details>
+        <summary>Create New User</summary>
+        <p>Write Parameters:</p>
+        <p><input type="text" name="name" placeholder="write Name">
+        <p><input type="text" name="last_name" placeholder="write Last_Name">
+        <p><input type="text" name="email" placeholder="write Email">
+        <p><input type="text" name="password" placeholder="write Password">
+        <p><input type="text" name="role" placeholder="write Role">
+            <input type="submit" name="submit" value="CreateUser"/></p>
+    </details>
+</form>
 <table>
     <tr>
         <th>Id</th>
@@ -16,7 +28,8 @@
         <th>DataPurchase</th>
     </tr>
     <c:forEach items="${requestScope.users}" var="user" varStatus="counter">
-        <tr><td>${counter.count}</td>
+        <tr>
+            <td>${counter.count}</td>
             <td><a href="controller?command=user&id=${user.id}">${user.name} ${user.last_name}</a></td>
             <td>${user.email}</td>
             <td>${user.password}</td>
