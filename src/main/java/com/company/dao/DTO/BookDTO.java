@@ -1,7 +1,5 @@
 package com.company.dao.DTO;
 
-import com.company.dao.entity.StatusBook;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;

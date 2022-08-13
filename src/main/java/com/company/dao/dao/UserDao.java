@@ -1,6 +1,5 @@
 package com.company.dao.dao;
 
-import com.company.dao.entity.Book;
 import com.company.dao.entity.User;
 
 import java.util.List;
@@ -19,6 +18,7 @@ public interface UserDao {
     boolean delete(Long id);
 
     public User getByEmail(String email);
+
     public List<User> getUserByLastName(String lastName);
 
 }

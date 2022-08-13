@@ -1,8 +1,5 @@
 package com.company.dao.DTO;
 
-import com.company.dao.entity.RoleUser;
-import com.company.dao.entity.User;
-
 import java.util.Objects;
 
 public class UserDTO {

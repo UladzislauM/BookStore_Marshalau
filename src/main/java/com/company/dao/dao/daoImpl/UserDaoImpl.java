@@ -4,7 +4,6 @@ import com.company.dao.dao.UserDao;
 import com.company.dao.entity.RoleUser;
 import com.company.dao.entity.User;
 import com.company.dao.util.DataSourceElephant;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -143,7 +142,6 @@ public class UserDaoImpl implements UserDao {
         }
         return false;
     }
-
 
     @Override
     public Long countAllUsers() {

@@ -2,7 +2,6 @@ package com.company.dao.service;
 
 import com.company.dao.entity.User;
 import com.company.dao.dao.UserDao;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

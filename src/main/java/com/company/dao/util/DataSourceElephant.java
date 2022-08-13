@@ -1,7 +1,6 @@
 package com.company.dao.util;
 
 import com.company.dao.resources.PropertiesLoader;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,6 +11,11 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DataSourceElephant implements Closeable {
+    public static final DataSourceElephant INSTANCE = new DataSourceElephant();
+
+    private DataSourceElephant() {
+    }
+
     private Connection connection;
     private static final Logger log = LogManager.getLogger(DataSourceElephant.class);
 
