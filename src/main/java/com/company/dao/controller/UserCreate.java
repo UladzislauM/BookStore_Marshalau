@@ -30,11 +30,11 @@ public class UserCreate implements Command {
                 return "error.jsp";
             } else {
                 userService.createUser(user);
-                req.setAttribute("user", user);
+                req.setAttribute("users", userService.getAllUsers());
                 return "user.jsp";
             }
         } catch (Exception e) {
-            log.error("Exception by UserCommand {}", e);
+            log.error("Exception by UserCreate {}", e);
             req.setAttribute("error", "The user does not exist");
             log.error("The user does not exist");
             return "error.jsp";

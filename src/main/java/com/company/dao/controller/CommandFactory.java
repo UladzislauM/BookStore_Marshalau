@@ -23,6 +23,7 @@ public class CommandFactory {
         commandMap.put("user", new UserCommand(userService));
         commandMap.put("error", new Error());
         commandMap.put("user_create", new UserCreate(userService));
+        commandMap.put("user_delete", new UserDelete(userService));
     }
 
     public Command getCommand(String command) {

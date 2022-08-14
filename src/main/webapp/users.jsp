@@ -16,30 +16,35 @@
         <p><input type="text" name="last_name" placeholder="write Last_Name">
         <p><input type="text" name="email" placeholder="write Email">
         <p><input type="text" name="password" placeholder="write Password">
-        <p><input type="text" name="role" placeholder="write Role">
-            <input type="submit" name="submit" value="CreateUser"/></p>
+        <p><input type="radio" name="role" value="USER">USER
+            <input type="radio" name="role" value="ADMIN">ADMIN
+            <input type="radio" name="role" value="MANAGER">MANAGER
+        <p><input type="submit" name="submit" value="Create User"/></p>
     </details>
 </form>
-<table class="table">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Role</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${requestScope.users}" var="user" varStatus="counter">
+<form action="controller?post_user=user_delete" method="post">
+    <table class="table">
+        <thead>
         <tr>
-            <td class="center">${counter.count}</td>
-            <td><a href="controller?command=user&id=${user.id}">${user.name} ${user.last_name}</a></td>
-            <td>${user.email}</td>
-            <td class="center">${user.role}</td>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
         </tr>
-    </c:forEach>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        <c:forEach items="${requestScope.users}" var="user" varStatus="counter">
+            <tr>
+                <td class="center"><input type="checkbox" name="id" value="${user.id}">${counter.count}</td>
+                <td><a href="controller?command=user&id=${user.id}">${user.name} ${user.last_name}</a></td>
+                <td>${user.email}</td>
+                <td class="center">${user.role}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    <input type="submit" name="id" value="Delete User"/>
+</form>
 <form align="left" action="controller" method="get">
     <h3>What do you want to work with?(users, books):</h3>
     <p><input type="text" name="command" placeholder="write command">
