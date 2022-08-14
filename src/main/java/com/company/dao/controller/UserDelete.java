@@ -17,7 +17,7 @@ public class UserDelete implements Command {
 
     @Override
     public String execude(HttpServletRequest req) {
-        log.info("Start UserCreate {}", req.getParameter("id"));
+        log.info("Start UserDelete {}", req.getParameter("id"));
         try {
             req.setCharacterEncoding("UTF-8");
             boolean checkDelete = userService.deleteUserById(Long.parseLong(req.getParameter("id")));
@@ -31,7 +31,7 @@ public class UserDelete implements Command {
             }
         } catch (Exception e) {
             log.error("Exception by UserDelete {}", e);
-            req.setAttribute("error", "The user does not deleted");
+            req.setAttribute("error", "The user does not deleted: " + e);
             log.error("The user does not deleted");
             return "error.jsp";
         }

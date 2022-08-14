@@ -17,11 +17,33 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        log.info("Start Controller doPost {}");
-        String commandParam = req.getParameter("post_user");
-        Command command = CommandFactory.INSTANCE.getCommand(commandParam);
-        String page = command.execude(req);
-        req.getRequestDispatcher(page).forward(req, resp);
+        String commandParam = req.getParameter("post");
+        log.info("Start Controller doPost {}", commandParam);
+        try {
+            if (commandParam == null) {
+                req.getRequestDispatcher("index.jsp").forward(req, resp);
+                log.info("Address error or CommandParam == null");
+            } else {
+                Command command = CommandFactory.INSTANCE.getCommand(commandParam);
+                if (command == null) {
+                    req.getRequestDispatcher("error.jsp").forward(req, resp);
+                    log.error("Input error");
+                } else {
+                    String page = "";
+                    try {
+                        page = command.execude(req);
+                    } catch (Exception e) {
+                        log.error("Controller exception, execude {}", e);
+                        req.setAttribute("errorMessage", "Oops ...");
+                        page = "error.jsp";
+                    }
+                    req.getRequestDispatcher(page).forward(req, resp);
+                }
+            }
+        } catch (ServletException | IOException e) {
+            log.error("Controller exception, forward {}", e);
+        }
+
     }
 
     @Override

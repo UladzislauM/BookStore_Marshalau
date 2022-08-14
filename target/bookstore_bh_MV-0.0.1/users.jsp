@@ -8,7 +8,7 @@
 </head>
 <body>
 <h3>AllUsers (abbreviated representation): </h3>
-<form align="left" action="controller?post_user=user_create" method="post">
+<form align="left" action="controller?post=user_create" method="post">
     <details>
         <summary>Create New User</summary>
         <p>Write Parameters:</p>
@@ -22,7 +22,7 @@
         <p><input type="submit" name="submit" value="Create User"/></p>
     </details>
 </form>
-<form action="controller?post_user=user_delete" method="post">
+<form action="controller?post=user_delete" method="post">
     <table class="table">
         <thead>
         <tr>
@@ -35,7 +35,7 @@
         <tbody>
         <c:forEach items="${requestScope.users}" var="user" varStatus="counter">
             <tr>
-                <td class="center"><input type="checkbox" name="id" value="${user.id}">${counter.count}</td>
+                <td class="center"><input type="radio" name="id" value="${user.id}">${counter.count}</td>
                 <td><a href="controller?command=user&id=${user.id}">${user.name} ${user.last_name}</a></td>
                 <td>${user.email}</td>
                 <td class="center">${user.role}</td>

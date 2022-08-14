@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Input error</h1>
-<h2>${requestScope.hashCode()}</h2>
+<h2>${requestScope.errorMessage}</h2>
 <a href="#" onclick="history.back();return false;" class="history-back"><-Back</a>
 </body>
 </html>

@@ -31,7 +31,7 @@ public class UserCreate implements Command {
             } else {
                 userService.createUser(user);
                 req.setAttribute("users", userService.getAllUsers());
-                return "user.jsp";
+                return "users.jsp";
             }
         } catch (Exception e) {
             log.error("Exception by UserCreate {}", e);
@@ -48,16 +48,7 @@ public class UserCreate implements Command {
         user.setEmail(req.getParameter("email"));
         user.setPassword(req.getParameter("password"));
         String roleStr = req.getParameter("role");
-        if (!isValidRole(roleStr)) {
-            log.error("Role not found");
-        }
         user.setRole(RoleUser.valueOf(roleStr));
         return user;
     }
-
-    public boolean isValidRole(String role) {
-        return Arrays.stream(RoleUser.values())
-                .anyMatch(e -> e.toString().equals(role));
-    }
-
 }

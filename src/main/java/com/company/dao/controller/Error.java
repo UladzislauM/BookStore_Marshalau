@@ -9,6 +9,7 @@ public class Error implements Command {
     @Override
     public String execude(HttpServletRequest req) {
             log.error("start method Error {}", req);
+            String message = req.getParameter("error");
             return "error.jsp";
     }
 }
