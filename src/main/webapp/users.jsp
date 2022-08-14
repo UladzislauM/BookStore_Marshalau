@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <title>BookStore</title>
+    <link rel="stylesheet" href="./CSS/style.css">
 </head>
 <body>
 <h3>AllUsers (abbreviated representation): </h3>
-<hr>
 <form align="left" action="controller?post_user=user_create" method="post">
     <details>
         <summary>Create New User</summary>
@@ -20,22 +20,25 @@
             <input type="submit" name="submit" value="CreateUser"/></p>
     </details>
 </form>
-<table>
+<table class="table">
+    <thead>
     <tr>
         <th>Id</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>DataPurchase</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
     </tr>
+    </thead>
+    <tbody>
     <c:forEach items="${requestScope.users}" var="user" varStatus="counter">
         <tr>
-            <td>${counter.count}</td>
+            <td class="center">${counter.count}</td>
             <td><a href="controller?command=user&id=${user.id}">${user.name} ${user.last_name}</a></td>
             <td>${user.email}</td>
-            <td>${user.password}</td>
-            <td>${user.role}</td>
+            <td class="center">${user.role}</td>
         </tr>
     </c:forEach>
+    </tbody>
 </table>
 <form align="left" action="controller" method="get">
     <h3>What do you want to work with?(users, books):</h3>

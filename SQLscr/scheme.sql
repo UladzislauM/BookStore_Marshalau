@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS books(
  title               CHARACTER VARYING (80) NOT NULL,
  name_Author         CHARACTER VARYING (60),
  date_Release_Book   DATE NOT null,
- price               double PRECISION,
+ price               DECIMAL(10,2),
  isbn                char(17) unique,
  status_id           BIGINT REFERENCES status(id)
 );
