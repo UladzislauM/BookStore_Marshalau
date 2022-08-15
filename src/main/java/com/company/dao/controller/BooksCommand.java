@@ -23,10 +23,12 @@ public class BooksCommand implements Command {
         try {
             List<Book> books = bookService.getAllBooks();
             req.setAttribute("books", books);
+            return "books.jsp";
         } catch (Exception e) {
             log.error("Exception by BooksCommand {}", e);
+            req.setAttribute("errorMessage", "Ops..... The book does not exist: " + e);
+            return "error.jsp";
         }
-        return "books.jsp";
     }
 }
 

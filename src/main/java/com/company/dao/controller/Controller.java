@@ -19,57 +19,38 @@ public class Controller extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String commandParam = req.getParameter("post");
         log.info("Start Controller doPost {}", commandParam);
-        try {
-            if (commandParam == null) {
-                req.getRequestDispatcher("index.jsp").forward(req, resp);
-                log.info("Address error or CommandParam == null");
-            } else {
-                Command command = CommandFactory.INSTANCE.getCommand(commandParam);
-                if (command == null) {
-                    req.getRequestDispatcher("error.jsp").forward(req, resp);
-                    log.error("Input error");
-                } else {
-                    String page = "";
-                    try {
-                        page = command.execude(req);
-                    } catch (Exception e) {
-                        log.error("Controller exception, execude {}", e);
-                        req.setAttribute("errorMessage", "Oops ...");
-                        page = "error.jsp";
-                    }
-                    req.getRequestDispatcher(page).forward(req, resp);
-                }
-            }
-        } catch (ServletException | IOException e) {
-            log.error("Controller exception, forward {}", e);
-        }
-
+        forwardProcess(req, resp, commandParam);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         String commandParam = req.getParameter("command");
         log.info("Start Controller doGet {}", commandParam);
+        forwardProcess(req, resp, commandParam);
+    }
+
+    private void forwardProcess(HttpServletRequest req, HttpServletResponse resp, String commandParam) {
         try {
             if (commandParam == null) {
                 req.getRequestDispatcher("index.jsp").forward(req, resp);
                 log.info("Address error or CommandParam == null");
             } else {
+                String page = "";
                 Command command = CommandFactory.INSTANCE.getCommand(commandParam);
                 if (command == null) {
-                    req.getRequestDispatcher("error.jsp").forward(req, resp);
-                    log.error("Input error");
+                    log.error("Controller exception, execude {}");
+                    req.setAttribute("errorMessage", "Oops..... You entered the wrong command.....");
+                    page = "error.jsp";
                 } else {
-                    String page = "";
                     try {
                         page = command.execude(req);
                     } catch (Exception e) {
                         log.error("Controller exception, execude {}", e);
-                        req.setAttribute("errorMessage", "Oops ...");
+                        req.setAttribute("errorMessage", "Oops..... Page not found.....");
                         page = "error.jsp";
                     }
-                    req.getRequestDispatcher(page).forward(req, resp);
                 }
+                req.getRequestDispatcher(page).forward(req, resp);
             }
         } catch (ServletException | IOException e) {
             log.error("Controller exception, forward {}", e);

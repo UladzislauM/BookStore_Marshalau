@@ -7,8 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Arrays;
-
 public class UserCreate implements Command {
     private final UserService userService;
 
@@ -25,7 +23,7 @@ public class UserCreate implements Command {
             req.setCharacterEncoding("UTF-8");
             User user = addUserKeyHttpReq(req);
             if (user.getName() == null) {
-                req.setAttribute("error", "The user does not exist");
+                req.setAttribute("errorMessage", "The user does not exist");
                 log.error("The user does not exist");
                 return "error.jsp";
             } else {
@@ -35,8 +33,7 @@ public class UserCreate implements Command {
             }
         } catch (Exception e) {
             log.error("Exception by UserCreate {}", e);
-            req.setAttribute("error", "The user does not exist");
-            log.error("The user does not exist");
+            req.setAttribute("errorMessage", "The user does not exist: " + e);
             return "error.jsp";
         }
     }

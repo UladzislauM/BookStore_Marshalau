@@ -22,7 +22,7 @@ public class UserDelete implements Command {
             req.setCharacterEncoding("UTF-8");
             boolean checkDelete = userService.deleteUserById(Long.parseLong(req.getParameter("id")));
             if (!checkDelete) {
-                req.setAttribute("error", "The user does not deleted");
+                req.setAttribute("errorMessage", "The user does not deleted");
                 log.error("The user does not deleted");
                 return "error.jsp";
             } else {
@@ -31,8 +31,7 @@ public class UserDelete implements Command {
             }
         } catch (Exception e) {
             log.error("Exception by UserDelete {}", e);
-            req.setAttribute("error", "The user does not deleted: " + e);
-            log.error("The user does not deleted");
+            req.setAttribute("errorMessage", "The user does not deleted: " + e);
             return "error.jsp";
         }
     }

@@ -23,9 +23,11 @@ public class UsersCommand implements Command {
         try {
             List<User> users = userService.getAllUsers();
             req.setAttribute("users", users);
+            return "users.jsp";
         } catch (Exception e) {
             log.error("Exception by UsersCommand {}", e);
+            req.setAttribute("errorMessage", "Ops..... The user does not exist: " + e);
+            return "error.jsp";
         }
-        return "users.jsp";
     }
 }

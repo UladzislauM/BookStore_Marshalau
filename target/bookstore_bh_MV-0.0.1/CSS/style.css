@@ -38,3 +38,7 @@
 .left{
     text-align: left !important;
 }
+.img {
+    border-radius: 8px;
+    width: 150px !important;
+}

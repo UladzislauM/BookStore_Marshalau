@@ -21,8 +21,8 @@ public class BookCommand implements Command {
         try {
             Book book = bookService.getBookById(Long.parseLong(req.getParameter("id")));
             if (book.getId() == 0) {
-                req.setAttribute("error", "The book does not exist");
-                log.error("The book does not exist");
+                log.error("The book does not exist, BookCommand");
+                req.setAttribute("errorMessage", "The book does not exist, BookCommand");
                 return "error.jsp";
             } else {
                 req.setAttribute("book", book);
@@ -30,7 +30,7 @@ public class BookCommand implements Command {
             }
         } catch (Exception e) {
             log.error("Exception by BookCommand {}", e);
-            req.setAttribute("error", "The book does not exist");
+            req.setAttribute("errorMessage", "The book does not exist, BookCommand: " + e);
             return "error.jsp";
         }
     }

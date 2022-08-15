@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-public class BookCreate implements Command{
+public class BookCreate implements Command {
     private final BookService bookService;
 
     public BookCreate(BookService bookService) {
@@ -20,6 +20,7 @@ public class BookCreate implements Command{
     }
 
     private static final Logger log = LogManager.getLogger(BookCreate.class);
+
     @Override
     public String execude(HttpServletRequest req) {
         log.info("Start BookCreate {}", req.getParameter("id"));
@@ -27,8 +28,8 @@ public class BookCreate implements Command{
             req.setCharacterEncoding("UTF-8");
             Book book = addBookKeyBoard(req);
             if (book.getTitle() == null) {
-                req.setAttribute("error", "The book does not deleted");
-                log.error("The book does not deleted");
+                req.setAttribute("errorMessage", "Ops..... The book does not created, BookCreate");
+                log.error("The book does not created, BookCreate.");
                 return "error.jsp";
             } else {
                 bookService.createBook(book);
@@ -37,16 +38,16 @@ public class BookCreate implements Command{
             }
         } catch (Exception e) {
             log.error("Exception by BookCreate {}", e);
-            req.setAttribute("error", "The book does not deleted");
-            log.error("The book does not deleted");
+            req.setAttribute("errorMessage", "Ops..... The book does not created, BookCreate: " + e);
             return "error.jsp";
         }
     }
+
     private Book addBookKeyBoard(HttpServletRequest req) {
         Book book = new Book();
         book.setTitle(req.getParameter("title"));
         book.setNameAuthor(req.getParameter("name_author"));
-        String dataNull =  req.getParameter("data_purchase");
+        String dataNull = req.getParameter("data_purchase");
         List<String> dataArr = Arrays.asList(dataNull.split("-"));
         book.setDateReleaseBook(LocalDate.of
                 (Integer.parseInt(dataArr.get(0)), Integer.parseInt(dataArr.get(1)), Integer.parseInt(dataArr.get(2))));
