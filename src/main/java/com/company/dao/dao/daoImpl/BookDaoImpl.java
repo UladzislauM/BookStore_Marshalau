@@ -76,7 +76,7 @@ public class BookDaoImpl implements BookDao {
             statement.setString(1, isbn);
             ResultSet resultSet = statement.executeQuery();
             log.debug("The method is being executed - getBookByISBN: {}", isbn);
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 return process(resultSet);
             }
         } catch (SQLException e) {

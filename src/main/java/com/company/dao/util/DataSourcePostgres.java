@@ -1,7 +1,6 @@
 package com.company.dao.util;
 
 import com.company.dao.resources.PropertiesLoader;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
