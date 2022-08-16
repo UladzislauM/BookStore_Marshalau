@@ -1,7 +1,7 @@
 package com.company.dao.controller;
 
 import com.company.dao.entity.Book;
-import com.company.dao.service.BookService;
+import com.company.dao.service.serviceImpl.BookBookServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,10 +9,10 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public class BooksCommand implements Command {
-    private final BookService bookService;
+    private final BookBookServiceImpl bookServiceImpl;
 
-    public BooksCommand(BookService bookService) {
-        this.bookService = bookService;
+    public BooksCommand(BookBookServiceImpl bookServiceImpl) {
+        this.bookServiceImpl = bookServiceImpl;
     }
 
     private static final Logger log = LogManager.getLogger(BooksCommand.class);
@@ -21,7 +21,7 @@ public class BooksCommand implements Command {
     public String execude(HttpServletRequest req) {
         log.info("Start BooksCommand {}", req);
         try {
-            List<Book> books = bookService.getAllBooks();
+            List<Book> books = bookServiceImpl.getAllBooks();
             req.setAttribute("books", books);
             return "books.jsp";
         } catch (Exception e) {

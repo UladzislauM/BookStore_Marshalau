@@ -2,8 +2,8 @@ package com.company.dao.controller;
 
 import com.company.dao.dao.daoImpl.BookDaoImpl;
 import com.company.dao.dao.daoImpl.UserDaoImpl;
-import com.company.dao.service.BookService;
-import com.company.dao.service.UserService;
+import com.company.dao.service.serviceImpl.BookBookServiceImpl;
+import com.company.dao.service.serviceImpl.UserServiceImpl;
 import com.company.dao.util.DataSourceElephant;
 
 import java.util.HashMap;
@@ -15,17 +15,17 @@ public class CommandFactory {
 
     private CommandFactory() {
         commandMap = new HashMap<>();
-        BookService bookService = new BookService(new BookDaoImpl(DataSourceElephant.INSTANCE));
-        UserService userService = new UserService(new UserDaoImpl(DataSourceElephant.INSTANCE));
-        commandMap.put("book", new BookCommand(bookService));
-        commandMap.put("books", new BooksCommand(bookService));
-        commandMap.put("users", new UsersCommand(userService));
-        commandMap.put("user", new UserCommand(userService));
+        BookBookServiceImpl bookServiceImpl = new BookBookServiceImpl(new BookDaoImpl(DataSourceElephant.INSTANCE));
+        UserServiceImpl userServiceImpl = new UserServiceImpl(new UserDaoImpl(DataSourceElephant.INSTANCE));
+        commandMap.put("book", new BookCommand(bookServiceImpl));
+        commandMap.put("books", new BooksCommand(bookServiceImpl));
+        commandMap.put("users", new UsersCommand(userServiceImpl));
+        commandMap.put("user", new UserCommand(userServiceImpl));
         commandMap.put("error", new Error());
-        commandMap.put("user_create", new UserCreate(userService));
-        commandMap.put("book_create", new BookCreate(bookService));
-        commandMap.put("user_delete", new UserDelete(userService));
-        commandMap.put("book_delete", new BookDelete(bookService));
+        commandMap.put("user_create", new UserCreate(userServiceImpl));
+        commandMap.put("book_create", new BookCreate(bookServiceImpl));
+        commandMap.put("user_delete", new UserDelete(userServiceImpl));
+        commandMap.put("book_delete", new BookDelete(bookServiceImpl));
     }
 
     public Command getCommand(String command) {

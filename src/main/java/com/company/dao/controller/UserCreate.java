@@ -2,16 +2,16 @@ package com.company.dao.controller;
 
 import com.company.dao.entity.RoleUser;
 import com.company.dao.entity.User;
-import com.company.dao.service.UserService;
+import com.company.dao.service.serviceImpl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class UserCreate implements Command {
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
-    public UserCreate(UserService userService) {
-        this.userService = userService;
+    public UserCreate(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
     private static final Logger log = LogManager.getLogger(UserCommand.class);
@@ -27,8 +27,8 @@ public class UserCreate implements Command {
                 log.error("The user does not exist");
                 return "error.jsp";
             } else {
-                userService.createUser(user);
-                req.setAttribute("users", userService.getAllUsers());
+                userServiceImpl.createUser(user);
+                req.setAttribute("users", userServiceImpl.getAllUsers());
                 return "users.jsp";
             }
         } catch (Exception e) {

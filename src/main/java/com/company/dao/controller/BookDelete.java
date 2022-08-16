@@ -1,15 +1,15 @@
 package com.company.dao.controller;
 
-import com.company.dao.service.BookService;
+import com.company.dao.service.serviceImpl.BookBookServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class BookDelete implements Command {
-    private final BookService bookService;
+    private final BookBookServiceImpl bookServiceImpl;
 
-    public BookDelete(BookService bookService) {
-        this.bookService = bookService;
+    public BookDelete(BookBookServiceImpl bookServiceImpl) {
+        this.bookServiceImpl = bookServiceImpl;
     }
 
     private static final Logger log = LogManager.getLogger(BookDelete.class);
@@ -19,13 +19,13 @@ public class BookDelete implements Command {
         log.info("Start BookDelete {}", req.getParameter("id"));
         try {
             req.setCharacterEncoding("UTF-8");
-            boolean checkDelete = bookService.deleteBookById(Long.parseLong(req.getParameter("id")));
+            boolean checkDelete = bookServiceImpl.deleteBookById(Long.parseLong(req.getParameter("id")));
             if (!checkDelete) {
                 log.error("The book does not deleted, BookDelete");
                 req.setAttribute("errorMessage", "Ops..... The book does not deleted, BookDelete");
                 return "error.jsp";
             } else {
-                req.setAttribute("books", bookService.getAllBooks());
+                req.setAttribute("books", bookServiceImpl.getAllBooks());
                 return "books.jsp";
             }
         } catch (Exception e) {

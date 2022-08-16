@@ -1,16 +1,16 @@
 package com.company.dao.controller;
 
 import com.company.dao.entity.User;
-import com.company.dao.service.UserService;
+import com.company.dao.service.serviceImpl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class UserCommand implements Command {
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
-    public UserCommand(UserService userService) {
-        this.userService = userService;
+    public UserCommand(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
     private static final Logger log = LogManager.getLogger(UserCommand.class);
@@ -19,7 +19,7 @@ public class UserCommand implements Command {
     public String execude(HttpServletRequest req) {
         log.info("Start UserCommand {}", req.getParameter("id"));
         try {
-            User user = userService.getUserById(Long.parseLong(req.getParameter("id")));
+            User user = userServiceImpl.getUserById(Long.parseLong(req.getParameter("id")));
             if (user.getId() == null) {
                 req.setAttribute("errorMessage", "The user does not exist");
                 log.error("The user does not exist");

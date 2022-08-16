@@ -1,7 +1,7 @@
 package com.company.dao.controller;
 
 import com.company.dao.entity.User;
-import com.company.dao.service.UserService;
+import com.company.dao.service.serviceImpl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,10 +9,10 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public class UsersCommand implements Command {
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
-    public UsersCommand(UserService userService) {
-        this.userService = userService;
+    public UsersCommand(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
     private static final Logger log = LogManager.getLogger(UsersCommand.class);
@@ -21,7 +21,7 @@ public class UsersCommand implements Command {
     public String execude(HttpServletRequest req) {
         log.info("Start UsersCommand {}", req);
         try {
-            List<User> users = userService.getAllUsers();
+            List<User> users = userServiceImpl.getAllUsers();
             req.setAttribute("users", users);
             return "users.jsp";
         } catch (Exception e) {

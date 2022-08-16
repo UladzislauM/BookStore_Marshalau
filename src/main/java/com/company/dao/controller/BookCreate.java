@@ -2,7 +2,7 @@ package com.company.dao.controller;
 
 import com.company.dao.entity.Book;
 import com.company.dao.entity.StatusBook;
-import com.company.dao.service.BookService;
+import com.company.dao.service.serviceImpl.BookBookServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,10 +13,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BookCreate implements Command {
-    private final BookService bookService;
+    private final BookBookServiceImpl bookServiceImpl;
 
-    public BookCreate(BookService bookService) {
-        this.bookService = bookService;
+    public BookCreate(BookBookServiceImpl bookServiceImpl) {
+        this.bookServiceImpl = bookServiceImpl;
     }
 
     private static final Logger log = LogManager.getLogger(BookCreate.class);
@@ -32,8 +32,8 @@ public class BookCreate implements Command {
                 log.error("The book does not created, BookCreate.");
                 return "error.jsp";
             } else {
-                bookService.createBook(book);
-                req.setAttribute("books", bookService.getAllBooks());
+                bookServiceImpl.createBook(book);
+                req.setAttribute("books", bookServiceImpl.getAllBooks());
                 return "books.jsp";
             }
         } catch (Exception e) {

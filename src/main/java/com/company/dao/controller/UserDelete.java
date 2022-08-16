@@ -1,16 +1,15 @@
 package com.company.dao.controller;
 
-import com.company.dao.entity.User;
-import com.company.dao.service.UserService;
+import com.company.dao.service.serviceImpl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class UserDelete implements Command {
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
-    public UserDelete(UserService userService) {
-        this.userService = userService;
+    public UserDelete(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
     private static final Logger log = LogManager.getLogger(UserCommand.class);
@@ -20,13 +19,13 @@ public class UserDelete implements Command {
         log.info("Start UserDelete {}", req.getParameter("id"));
         try {
             req.setCharacterEncoding("UTF-8");
-            boolean checkDelete = userService.deleteUserById(Long.parseLong(req.getParameter("id")));
+            boolean checkDelete = userServiceImpl.deleteUserById(Long.parseLong(req.getParameter("id")));
             if (!checkDelete) {
                 req.setAttribute("errorMessage", "The user does not deleted");
                 log.error("The user does not deleted");
                 return "error.jsp";
             } else {
-                req.setAttribute("users", userService.getAllUsers());
+                req.setAttribute("users", userServiceImpl.getAllUsers());
                 return "users.jsp";
             }
         } catch (Exception e) {
