@@ -1,5 +1,6 @@
-package com.company.dao.controller;
+package com.company.dao.controller.UserControllers;
 
+import com.company.dao.controller.Command;
 import com.company.dao.entity.RoleUser;
 import com.company.dao.entity.User;
 import com.company.dao.service.serviceImpl.UserServiceImpl;
@@ -9,11 +10,12 @@ import org.apache.logging.log4j.Logger;
 
 public class UserCreate implements Command {
     private final UserServiceImpl userServiceImpl;
+    private User user;
 
-    public UserCreate(UserServiceImpl userServiceImpl) {
+    public UserCreate(UserServiceImpl userServiceImpl, User user) {
         this.userServiceImpl = userServiceImpl;
+        this.user = user;
     }
-
     private static final Logger log = LogManager.getLogger(UserCommand.class);
 
     @Override
@@ -21,7 +23,7 @@ public class UserCreate implements Command {
         log.info("Start UserCreate {}", req.getParameter("id"));
         try {
             req.setCharacterEncoding("UTF-8");
-            User user = addUserKeyHttpReq(req);
+            user = addUserKeyHttpReq(req);
             if (user.getName() == null) {
                 req.setAttribute("errorMessage", "The user does not exist");
                 log.error("The user does not exist");
@@ -39,7 +41,6 @@ public class UserCreate implements Command {
     }
 
     private User addUserKeyHttpReq(HttpServletRequest req) {
-        User user = new User();
         user.setName(req.getParameter("name"));
         user.setLast_name(req.getParameter("last_name"));
         user.setEmail(req.getParameter("email"));

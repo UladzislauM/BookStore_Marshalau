@@ -1,5 +1,6 @@
-package com.company.dao.controller;
+package com.company.dao.controller.BookControllers;
 
+import com.company.dao.controller.Command;
 import com.company.dao.entity.Book;
 import com.company.dao.service.serviceImpl.BookBookServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,9 +9,11 @@ import org.apache.logging.log4j.Logger;
 
 public class BookCommand implements Command {
     private final BookBookServiceImpl bookServiceImpl;
+    private Book book;
 
-    public BookCommand(BookBookServiceImpl bookServiceImpl) {
+    public BookCommand(BookBookServiceImpl bookServiceImpl, Book book) {
         this.bookServiceImpl = bookServiceImpl;
+        this.book = book;
     }
 
     private static final Logger log = LogManager.getLogger(BookCommand.class);
@@ -19,7 +22,7 @@ public class BookCommand implements Command {
     public String execude(HttpServletRequest req) {
         log.info("Start BookCommand {}", req.getParameter("id"));
         try {
-            Book book = bookServiceImpl.getBookById(Long.parseLong(req.getParameter("id")));
+            book = bookServiceImpl.getBookById(Long.parseLong(req.getParameter("id")));
             if (book.getId() == 0) {
                 log.error("The book does not exist, BookCommand");
                 req.setAttribute("errorMessage", "The book does not exist, BookCommand");

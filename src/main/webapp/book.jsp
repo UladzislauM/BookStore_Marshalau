@@ -48,7 +48,6 @@
 <form id="form2" action="controller?post=book_delete&id=${requestScope.book.id}" method="post"></form>
 <input form="form2" type="submit" name="delete" value="Delete book"/>
 </p>
-
 <a href="#" onclick="history.back();return false;" class="history-back"><-Back</a>
 </body>
 </html>

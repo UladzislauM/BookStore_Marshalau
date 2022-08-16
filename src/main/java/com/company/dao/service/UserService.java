@@ -17,7 +17,7 @@ public interface UserService {
 
     User createUser(User user);
 
-    User updateUserById(User user);
+    User updateUser(User user);
 
     Long countAllUsers();
 }

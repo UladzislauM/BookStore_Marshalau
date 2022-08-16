@@ -44,7 +44,7 @@ public class BookBookServiceImpl implements BookService {
     }
 
     @Override
-    public Book updateBookById(Book book) {
+    public Book updateBook(Book book) {
         log.debug("Start BookService - updateBookById {}", book);
         return bookDao.update(book);
     }

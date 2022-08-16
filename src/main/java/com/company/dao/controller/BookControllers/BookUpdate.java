@@ -1,5 +1,6 @@
-package com.company.dao.controller;
+package com.company.dao.controller.BookControllers;
 
+import com.company.dao.controller.Command;
 import com.company.dao.entity.Book;
 import com.company.dao.entity.StatusBook;
 import com.company.dao.service.serviceImpl.BookBookServiceImpl;
@@ -35,7 +36,7 @@ public class BookUpdate implements Command {
                 req.setAttribute("errorMessage", "Ops..... The book does not update, BookUpdate");
                 return "error.jsp";
             } else {
-                bookServiceImpl.updateBookById(book);
+                bookServiceImpl.updateBook(book);
                 req.setAttribute("books", bookServiceImpl.getAllBooks());
                 return "books.jsp";
             }

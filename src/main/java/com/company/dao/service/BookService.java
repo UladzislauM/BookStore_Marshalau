@@ -14,7 +14,7 @@ public interface BookService {
 
     Book createBook(Book book);
 
-    Book updateBookById(Book book);
+    Book updateBook(Book book);
 
     Book getBookByISBN(String isbn);
 

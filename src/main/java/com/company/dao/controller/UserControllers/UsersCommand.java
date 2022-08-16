@@ -1,5 +1,6 @@
-package com.company.dao.controller;
+package com.company.dao.controller.UserControllers;
 
+import com.company.dao.controller.Command;
 import com.company.dao.entity.User;
 import com.company.dao.service.serviceImpl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;

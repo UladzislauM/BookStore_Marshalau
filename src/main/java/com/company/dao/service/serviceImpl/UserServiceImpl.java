@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserById(User user) {
+    public User updateUser(User user) {
         log.debug("Start UserService - updateUserById: {}", user);
         return userDao.update(user);
     }
