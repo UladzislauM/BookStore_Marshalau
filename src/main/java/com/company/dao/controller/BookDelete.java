@@ -30,7 +30,7 @@ public class BookDelete implements Command {
             }
         } catch (Exception e) {
             log.error("Exception by BookDelete {}", e);
-            req.setAttribute("errorMessage", "Ops..... <p>The book does not deleted: </p>" + e);
+            req.setAttribute("errorMessage", "Ops..... The book does not deleted: " + e);
             return "error.jsp";
         }
     }

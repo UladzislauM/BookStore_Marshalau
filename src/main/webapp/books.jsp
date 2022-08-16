@@ -15,7 +15,8 @@
         <p>Write Parameters:</p>
         <p><input type="text" name="title" placeholder="write title">
         <p><input type="text" name="name_author" placeholder="write author">
-        <p><input type="text" name="data_purchase" placeholder="write data purchase(format: yyyy-MM-dd)">
+        <p>(Format data: yyyy-MM-dd)</p>
+        <p><input type="date" name="data_purchase" placeholder="write data purchase">
         <p><input type="text" name="price" placeholder="write price">
         <p><input type="text" name="isbn" placeholder="write isbn">
         <p><input type="radio" name="status_book" value="IN_STOCK">IN_STOCK
@@ -34,6 +35,7 @@
             <th>Title</th>
             <th>Author</th>
             <th>DataPurchase</th>
+            <th>Price</th>
         </tr>
         </thead>
         <tbody>
@@ -43,6 +45,7 @@
                 <td><a href="controller?command=book&id=${book.id}">${book.title}</a></td>
                 <td>${book.nameAuthor}</td>
                 <td class="center">${book.dateReleaseBook}</td>
+                <td class="center">${book.price}</td>
             </tr>
         </c:forEach>
         </tbody>

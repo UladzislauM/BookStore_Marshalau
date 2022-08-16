@@ -14,7 +14,7 @@
         <p>Write Parameters:</p>
         <p><input type="text" name="name" placeholder="write Name">
         <p><input type="text" name="last_name" placeholder="write Last_Name">
-        <p><input type="text" name="email" placeholder="write Email">
+        <p><input type="email" name="email" placeholder="write Email">
         <p><input type="text" name="password" placeholder="write Password">
         <p><input type="radio" name="role" value="USER">USER
             <input type="radio" name="role" value="ADMIN">ADMIN
