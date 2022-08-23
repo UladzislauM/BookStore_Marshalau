@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <title>BookStore</title>
-    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
 <h3 align="center">AllBooks (abbreviated representation): </h3>

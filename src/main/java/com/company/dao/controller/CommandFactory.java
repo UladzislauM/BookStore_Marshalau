@@ -6,7 +6,7 @@ import com.company.dao.dao.daoImpl.BookDaoImpl;
 import com.company.dao.dao.daoImpl.UserDaoImpl;
 import com.company.dao.entity.Book;
 import com.company.dao.entity.User;
-import com.company.dao.service.serviceImpl.BookBookServiceImpl;
+import com.company.dao.service.serviceImpl.BookServiceImpl;
 import com.company.dao.service.serviceImpl.UserServiceImpl;
 import com.company.dao.util.DataSourceElephant;
 
@@ -19,7 +19,7 @@ public class CommandFactory {
 
     private CommandFactory() {
         commandMap = new HashMap<>();
-        BookBookServiceImpl bookServiceImpl = new BookBookServiceImpl(new BookDaoImpl(DataSourceElephant.INSTANCE));
+        BookServiceImpl bookServiceImpl = new BookServiceImpl(new BookDaoImpl(DataSourceElephant.INSTANCE));
         UserServiceImpl userServiceImpl = new UserServiceImpl(new UserDaoImpl(DataSourceElephant.INSTANCE));
         Book book = new Book();
         User user = new User();

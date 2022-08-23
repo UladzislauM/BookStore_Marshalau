@@ -3,7 +3,7 @@ package com.company.dao.controller.BookControllers;
 import com.company.dao.controller.Command;
 import com.company.dao.entity.Book;
 import com.company.dao.entity.StatusBook;
-import com.company.dao.service.serviceImpl.BookBookServiceImpl;
+import com.company.dao.service.serviceImpl.BookServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,10 +14,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BookUpdate implements Command {
-    private final BookBookServiceImpl bookServiceImpl;
+    private final BookServiceImpl bookServiceImpl;
     private Book book;
 
-    public BookUpdate(BookBookServiceImpl bookServiceImpl, Book book) {
+    public BookUpdate(BookServiceImpl bookServiceImpl, Book book) {
         this.bookServiceImpl = bookServiceImpl;
         this.book = book;
     }

@@ -2,16 +2,16 @@ package com.company.dao.controller.BookControllers;
 
 import com.company.dao.controller.Command;
 import com.company.dao.entity.Book;
-import com.company.dao.service.serviceImpl.BookBookServiceImpl;
+import com.company.dao.service.serviceImpl.BookServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class BookCommand implements Command {
-    private final BookBookServiceImpl bookServiceImpl;
+    private final BookServiceImpl bookServiceImpl;
     private Book book;
 
-    public BookCommand(BookBookServiceImpl bookServiceImpl, Book book) {
+    public BookCommand(BookServiceImpl bookServiceImpl, Book book) {
         this.bookServiceImpl = bookServiceImpl;
         this.book = book;
     }

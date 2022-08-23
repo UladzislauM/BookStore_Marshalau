@@ -31,8 +31,8 @@ public class UserDaoImpl implements UserDao {
     private static final Logger log = LogManager.getLogger(BookDaoImpl.class);
 
 
-    public UserDaoImpl(DataSourceElephant dataSourceElephant) {
-        this.dataSourceElephant = dataSourceElephant;
+    public UserDaoImpl(DataSourceElephant dataSourceElephantbad) {
+        this.dataSourceElephant = dataSourceElephantbad;
     }
 
     @Override
