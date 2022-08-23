@@ -9,11 +9,11 @@ import org.apache.logging.log4j.Logger;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class BookBookServiceImpl implements BookService {
+public class BookServiceImpl implements BookService {
     private final BookDao bookDao;
-    private static final Logger log = LogManager.getLogger(BookBookServiceImpl.class);
+    private static final Logger log = LogManager.getLogger(BookServiceImpl.class);
 
-    public BookBookServiceImpl(BookDao bookDao) {
+    public BookServiceImpl(BookDao bookDao) {
         this.bookDao = bookDao;
     }
 

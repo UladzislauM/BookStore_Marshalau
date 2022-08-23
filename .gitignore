@@ -30,3 +30,6 @@ replay_pid*
 #loggs
 logs/
 *.log
+
+#target
+target/

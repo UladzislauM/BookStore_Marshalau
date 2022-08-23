@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>BookStore</title>
-    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
 <h2 align="center">Book: ${requestScope.book.title}</h2>

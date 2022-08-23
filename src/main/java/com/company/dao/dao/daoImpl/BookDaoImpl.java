@@ -30,8 +30,8 @@ public class BookDaoImpl implements BookDao {
     private final DataSourceElephant dataSourceElephant;
     private static final Logger log = LogManager.getLogger(BookDaoImpl.class);
 
-    public BookDaoImpl(DataSourceElephant dataSourceElephant) {
-        this.dataSourceElephant = dataSourceElephant;
+    public BookDaoImpl(DataSourceElephant dataSourceElephantbad) {
+        this.dataSourceElephant = dataSourceElephantbad;
     }
 
     @Override

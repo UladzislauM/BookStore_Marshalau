@@ -1,15 +1,15 @@
 package com.company.dao.controller.BookControllers;
 
 import com.company.dao.controller.Command;
-import com.company.dao.service.serviceImpl.BookBookServiceImpl;
+import com.company.dao.service.serviceImpl.BookServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class BookDelete implements Command {
-    private final BookBookServiceImpl bookServiceImpl;
+    private final BookServiceImpl bookServiceImpl;
 
-    public BookDelete(BookBookServiceImpl bookServiceImpl) {
+    public BookDelete(BookServiceImpl bookServiceImpl) {
         this.bookServiceImpl = bookServiceImpl;
     }
 
