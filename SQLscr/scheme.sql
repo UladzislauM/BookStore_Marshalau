@@ -1,8 +1,8 @@
 /*
-DROP TABLE IF EXISTS status;
 DROP TABLE IF EXISTS books;
-DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS status;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS role;
 */
 
 CREATE TABLE IF NOT EXISTS status(
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS books(
  title               CHARACTER VARYING (80) NOT NULL,
  name_Author         CHARACTER VARYING (60),
  date_Release_Book   DATE NOT null,
- price               DECIMAL(10,2),
+ price               double PRECISION,
  isbn                char(17) unique,
  status_id           BIGINT REFERENCES status(id)
 );

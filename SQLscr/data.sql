@@ -23,7 +23,7 @@ VALUES ('7Navikov', 'S.Kovy', '1991-12-25', 32.00, '978-3-16-148410-0', (SELECT 
     ('Pineapple water for beautiful ladies', 'V.Pelevin', '2010-11-25', 12.20, '978-3-16-148412-0', (SELECT Id FROM status WHERE status_name = 'IN_STOCK')),
     ('An Occurrence at Owl Creek Bridge', 'A.Birs', '1890-06-05', 24.30, '978-3-16-148412-1', (SELECT Id FROM status WHERE status_name = 'IN_STOCK')),
     ('To Kill a Mockingbird', 'H.Li', '1960-06-11', 110.80, '978-3-16-148412-2', (SELECT Id FROM status WHERE status_name = 'IN_STOCK')),
-    ('What Doesn’t Kill Us', 'S.Carney', '2011-11-20', 26.00, '978-3-16-148412-3', (SELECT Id FROM status WHERE status_name = 'IN_STOCK')),
+    ('What Doesnâ€™t Kill Us', 'S.Carney', '2011-11-20', 26.00, '978-3-16-148412-3', (SELECT Id FROM status WHERE status_name = 'IN_STOCK')),
     ('Sleeping Beauties', 'S.King', '2017-09-01', 45.70, '978-3-16-148412-4', (SELECT Id FROM status WHERE status_name = 'IN_STOCK')),
     ('In search of the lost orpheus', 'A.Lurie', '1912-04-04', 84.30, '978-3-16-148412-5', (SELECT Id FROM status WHERE status_name = 'IN_STOCK'));
 
